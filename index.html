@@ -23,7 +23,10 @@
                         serif: ['"Cormorant Garamond"', 'serif'],
                         sans: ['"Montserrat"', 'sans-serif'],
                     },
-                    boxShadow: { 'glow': '0 0 20px rgba(255, 215, 0, 0.6)' }
+                    boxShadow: { 'glow': '0 0 20px rgba(255, 215, 0, 0.6)' },
+                    screens: {
+                        'xs': '375px', // Punto de quiebre extra para móviles pequeños
+                    }
                 }
             }
         }
@@ -50,22 +53,22 @@
 </head>
 <body class="bg-cream text-forest-900 antialiased overflow-x-hidden font-sans">
 
-    <header class="relative h-screen w-full flex flex-col items-center justify-center text-center overflow-hidden px-4">
+    <header class="relative h-screen min-h-[600px] w-full flex flex-col items-center justify-center text-center overflow-hidden px-4">
         <div class="absolute inset-0 z-0">
             <div class="absolute inset-0 bg-black/40 z-10"></div>
             <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1920&q=80" 
                  class="w-full h-full object-cover animate-[pulse_60s_linear_infinite_reverse] scale-110" alt="Fondo Boda">
         </div>
 
-        <div class="relative z-20 text-white fade-up delay-300 w-full max-w-6xl">
-            <p class="font-sans font-medium tracking-[0.3em] text-xs md:text-sm uppercase mb-2 text-gold-400 drop-shadow-md">Nos Casamos</p>
+        <div class="relative z-20 text-white fade-up delay-300 w-full max-w-7xl mx-auto">
+            <p class="font-sans font-medium tracking-[0.3em] text-xs md:text-sm uppercase mb-4 text-gold-400 drop-shadow-md">Nos Casamos</p>
             
-            <h1 class="script-font-fix font-script text-6xl sm:text-7xl md:text-9xl lg:text-[10rem] text-rich-gold drop-shadow-2xl leading-tight">
-                Lorem <span class="text-white block sm:inline my-[-20px] sm:my-0">&</span> Lorem 
+            <h1 class="script-font-fix font-script text-5xl xs:text-6xl sm:text-7xl md:text-9xl lg:text-[10rem] text-rich-gold drop-shadow-2xl leading-none md:leading-tight">
+                Lorem <span class="text-white block sm:inline my-2 sm:my-0 text-4xl sm:text-7xl md:text-8xl">&</span> Lorem 
             </h1>
             
-            <div class="inline-block border-t border-b border-gold-400/50 py-2 px-6 md:py-3 md:px-8 mt-4 backdrop-blur-sm bg-black/10 rounded-full">
-                <p class="font-serif text-xl md:text-3xl font-semibold text-white drop-shadow-md tracking-wide">
+            <div class="inline-block border-t border-b border-gold-400/50 py-2 px-6 md:py-3 md:px-8 mt-6 backdrop-blur-sm bg-black/10 rounded-full">
+                <p class="font-serif text-lg xs:text-xl md:text-3xl font-semibold text-white drop-shadow-md tracking-wide">
                     12 de Diciembre, 2026
                 </p>
             </div>
@@ -90,86 +93,86 @@
         </div>
     </section>
 
-    <section class="py-16 md:py-24 bg-forest-800 text-white relative overflow-hidden">
+    <section class="py-12 md:py-24 bg-forest-800 text-white relative overflow-hidden">
         <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-forest-900/50 to-transparent"></div>
 
-        <div class="max-w-6xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div class="max-w-6xl mx-auto px-4 md:px-6 relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             
             <div class="text-center lg:text-left fade-up">
                 <h2 class="font-script text-5xl md:text-6xl text-gold-400 mb-8 drop-shadow-md script-font-fix">Falta muy poco...</h2>
                 <div class="grid grid-cols-4 gap-2 md:gap-4 max-w-lg mx-auto lg:mx-0">
                     <div class="bg-forest-900/40 backdrop-blur-md rounded-xl md:rounded-2xl p-2 md:p-4 border border-gold-400/20 shadow-lg">
                         <span id="days" class="block text-xl md:text-3xl font-serif font-bold text-white mb-1">00</span>
-                        <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Días</span>
+                        <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Días</span>
                     </div>
                      <div class="bg-forest-900/40 backdrop-blur-md rounded-xl md:rounded-2xl p-2 md:p-4 border border-gold-400/20 shadow-lg">
                         <span id="hours" class="block text-xl md:text-3xl font-serif font-bold text-white mb-1">00</span>
-                        <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Hrs</span>
+                        <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Hrs</span>
                     </div>
                      <div class="bg-forest-900/40 backdrop-blur-md rounded-xl md:rounded-2xl p-2 md:p-4 border border-gold-400/20 shadow-lg">
                         <span id="minutes" class="block text-xl md:text-3xl font-serif font-bold text-white mb-1">00</span>
-                        <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Min</span>
+                        <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Min</span>
                     </div>
                      <div class="bg-forest-900/40 backdrop-blur-md rounded-xl md:rounded-2xl p-2 md:p-4 border border-gold-400/20 shadow-lg">
                         <span id="seconds" class="block text-xl md:text-3xl font-serif font-bold text-white mb-1">00</span>
-                        <span class="text-[8px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Seg</span>
+                        <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Seg</span>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-cream rounded-[2rem] p-6 md:p-8 shadow-2xl border-4 border-double border-gold-400/30 text-forest-900 relative transform md:rotate-2 hover:rotate-0 transition-all duration-500 fade-up delay-150">
-                <div class="text-center mb-6 md:mb-8">
+            <div class="bg-cream rounded-[2rem] p-4 md:p-10 shadow-2xl border-4 border-double border-gold-400/30 text-forest-900 relative transform md:rotate-2 hover:rotate-0 transition-all duration-500 fade-up delay-150 max-w-md mx-auto lg:max-w-none w-full">
+                <div class="text-center mb-4 md:mb-8">
                     <h3 class="font-serif text-3xl md:text-4xl font-bold text-forest-900">Diciembre</h3>
                     <p class="text-gold-600 text-xs md:text-sm font-bold tracking-[0.4em] uppercase mt-2">2026</p>
                 </div>
                 
-                <div class="grid grid-cols-7 gap-1 md:gap-2 text-center font-sans text-sm md:text-base">
-                    <div class="font-bold text-xs uppercase py-2">L</div>
-                    <div class="font-bold text-xs uppercase py-2">M</div>
-                    <div class="font-bold text-xs uppercase py-2">M</div>
-                    <div class="font-bold text-xs uppercase py-2">J</div>
-                    <div class="font-bold text-xs uppercase py-2">V</div>
-                    <div class="font-bold text-xs uppercase py-2">S</div>
-                    <div class="font-bold text-xs uppercase py-2 text-gold-600">D</div>
+                <div class="grid grid-cols-7 gap-y-1 gap-x-0 md:gap-2 text-center font-sans text-sm md:text-base items-center">
+                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">L</div>
+                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">M</div>
+                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">M</div>
+                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">J</div>
+                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">V</div>
+                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">S</div>
+                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-gold-600 tracking-wider">D</div>
 
                     <span></span>
-                    <span class="p-2 opacity-50">1</span>
-                    <span class="p-2 opacity-50">2</span>
-                    <span class="p-2 opacity-50">3</span>
-                    <span class="p-2 opacity-50">4</span>
-                    <span class="p-2 opacity-50">5</span>
-                    <span class="text-gold-600 font-bold p-2">6</span>
-                    <span class="p-2 opacity-50">7</span>
-                    <span class="p-2 opacity-50">8</span>
-                    <span class="p-2 opacity-50">9</span>
-                    <span class="p-2 opacity-50">10</span>
-                    <span class="p-2 opacity-50">11</span>
+                    <span class="p-1 md:p-2 opacity-50">1</span>
+                    <span class="p-1 md:p-2 opacity-50">2</span>
+                    <span class="p-1 md:p-2 opacity-50">3</span>
+                    <span class="p-1 md:p-2 opacity-50">4</span>
+                    <span class="p-1 md:p-2 opacity-50">5</span>
+                    <span class="text-gold-600 font-bold p-1 md:p-2">6</span>
+                    <span class="p-1 md:p-2 opacity-50">7</span>
+                    <span class="p-1 md:p-2 opacity-50">8</span>
+                    <span class="p-1 md:p-2 opacity-50">9</span>
+                    <span class="p-1 md:p-2 opacity-50">10</span>
+                    <span class="p-1 md:p-2 opacity-50">11</span>
                     
-                    <div class="relative flex items-center justify-center p-1">
-                        <span class="relative z-10 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-yellow-400 text-forest-900 rounded-full font-extrabold shadow-glow text-base md:text-lg">
+                    <div class="relative flex items-center justify-center p-0.5 md:p-1 w-full h-full">
+                        <span class="relative z-10 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-yellow-400 text-forest-900 rounded-full font-extrabold shadow-glow text-sm md:text-lg">
                             12
                         </span>
                     </div>
 
-                    <span class="text-gold-600 font-bold p-2">13</span>
-                    <span class="p-2 opacity-50">14</span>
-                    <span class="p-2 opacity-50">15</span>
-                    <span class="p-2 opacity-50">16</span>
-                    <span class="p-2 opacity-50">17</span>
-                    <span class="p-2 opacity-50">18</span>
-                    <span class="text-gold-600 font-bold p-2">19</span>
-                    <span class="p-2 opacity-50">20</span>
-                    <span class="p-2 opacity-50">21</span>
-                    <span class="p-2 opacity-50">22</span>
-                    <span class="p-2 opacity-50">23</span>
-                    <span class="p-2 opacity-50">24</span>
-                    <span class="p-2 opacity-50">25</span>
-                    <span class="text-gold-600 font-bold p-2">26</span>
-                    <span class="p-2 opacity-50">27</span>
-                    <span class="p-2 opacity-50">28</span>
-                    <span class="p-2 opacity-50">29</span>
-                    <span class="p-2 opacity-50">30</span>
-                    <span class="p-2 opacity-50">31</span>
+                    <span class="text-gold-600 font-bold p-1 md:p-2">13</span>
+                    <span class="p-1 md:p-2 opacity-50">14</span>
+                    <span class="p-1 md:p-2 opacity-50">15</span>
+                    <span class="p-1 md:p-2 opacity-50">16</span>
+                    <span class="p-1 md:p-2 opacity-50">17</span>
+                    <span class="p-1 md:p-2 opacity-50">18</span>
+                    <span class="text-gold-600 font-bold p-1 md:p-2">19</span>
+                    <span class="p-1 md:p-2 opacity-50">20</span>
+                    <span class="p-1 md:p-2 opacity-50">21</span>
+                    <span class="p-1 md:p-2 opacity-50">22</span>
+                    <span class="p-1 md:p-2 opacity-50">23</span>
+                    <span class="p-1 md:p-2 opacity-50">24</span>
+                    <span class="p-1 md:p-2 opacity-50">25</span>
+                    <span class="text-gold-600 font-bold p-1 md:p-2">26</span>
+                    <span class="p-1 md:p-2 opacity-50">27</span>
+                    <span class="p-1 md:p-2 opacity-50">28</span>
+                    <span class="p-1 md:p-2 opacity-50">29</span>
+                    <span class="p-1 md:p-2 opacity-50">30</span>
+                    <span class="p-1 md:p-2 opacity-50">31</span>
                 </div>
             </div>
         </div>
@@ -179,8 +182,9 @@
         <div class="max-w-5xl mx-auto">
             <h2 class="text-center font-script text-5xl md:text-6xl text-forest-900 mb-10 md:mb-16 fade-up drop-shadow-sm script-font-fix">Detalles del Evento</h2>
             
-            <div class="grid md:grid-cols-2 gap-6 md:gap-10">
-                <div class="group bg-cream p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-xl border-2 border-white hover:border-gold-400/50 transition-all duration-500 fade-up">
+            <div class="grid md:grid-cols-2 gap-8 md:gap-10">
+                
+                <div class="group bg-cream p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-xl border-2 border-white hover:border-gold-400/50 transition-all duration-500 fade-up">
                     <div class="flex flex-col items-center text-center">
                         <div class="w-16 h-16 md:w-20 md:h-20 bg-forest-800 rounded-full flex items-center justify-center text-gold-400 mb-4 md:mb-6 shadow-xl group-hover:scale-110 transition-transform">
                             <i data-lucide="church" class="w-8 h-8 md:w-10 md:h-10"></i>
@@ -200,7 +204,7 @@
                     </div>
                 </div>
 
-                <div class="group bg-cream p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-xl border-2 border-white hover:border-gold-400/50 transition-all duration-500 fade-up delay-150">
+                <div class="group bg-cream p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-xl border-2 border-white hover:border-gold-400/50 transition-all duration-500 fade-up delay-150">
                     <div class="flex flex-col items-center text-center">
                         <div class="w-16 h-16 md:w-20 md:h-20 bg-forest-800 rounded-full flex items-center justify-center text-gold-400 mb-4 md:mb-6 shadow-xl group-hover:scale-110 transition-transform">
                             <i data-lucide="wine" class="w-8 h-8 md:w-10 md:h-10"></i>
@@ -285,7 +289,6 @@
         }, { threshold: 0.15 });
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-        // Cuenta atrás
         const targetDate = new Date('2026-12-12T18:00:00').getTime();
         setInterval(() => {
             const now = new Date().getTime();
