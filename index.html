@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: { 900: '#1a332a', 800: '#24423a', 700: '#2d5248' },
+                        gold: { 
+                            400: '#cba157', 
+                            500: '#b38b42',
+                            600: '#967233',
+                            bright: '#FFD700' 
+                        },
+                        cream: { DEFAULT: '#fbf9f4', darker: '#f2ede4' }
+                    },
+                    fontFamily: {
+                        script: ['"Great Vibes"', 'cursive'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'gold-gradient': 'linear-gradient(to right, #cba157, #e3c88b, #cba157, #b38b42)',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(255, 215, 0, 0.6)', 
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+      
+        .script-font-fix {
+            line-height: 1.3 !important; 
+            padding-top: 0.2em;
+            padding-bottom: 0.2em;
+        }
+
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 50; mix-blend-mode: multiply;
+        }
+
+        .text-rich-gold {
+            background: linear-gradient(to right, #cba157, #ebd3a5, #cba157, #a37b32);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .fade-up { opacity: 0; transform: translateY(25px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        
+        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease-in-out, transform 8s linear; transform: scale(1.05); }
+        .slide.active { opacity: 1; transform: scale(1); }
+
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-cream text-forest-900 antialiased overflow-x-hidden font-sans">
+
+    <header class="relative h-screen w-full flex flex-col items-center justify-center text-center overflow-hidden px-4">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-black/40 z-10"></div>
+            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1920&q=80" 
+                 class="w-full h-full object-cover animate-[pulse_60s_linear_infinite_reverse] scale-110" alt="Fondo Boda">
+        </div>
+
+        <div class="relative z-20 text-white fade-up delay-300 w-full max-w-6xl">
+            <p class="font-sans font-medium tracking-[0.3em] text-sm uppercase mb-2 text-gold-400 drop-shadow-md">Nos Casamos</p>
+            
+            <h1 class="script-font-fix font-script text-7xl md:text-9xl lg:text-[10rem] text-rich-gold drop-shadow-2xl">
+               Lorem  <span class="text-white">&</span> Lorem 
+            </h1>
+            
+            <div class="inline-block border-t border-b border-gold-400/50 py-3 px-8 mt-2 backdrop-blur-sm bg-black/10 rounded-full">
+                <p class="font-serif text-2xl md:text-3xl font-semibold text-white drop-shadow-md tracking-wide">
+                    12 de Diciembre, 2026
+                </p>
+            </div>
+        </div>
+
+        <div class="absolute bottom-12 z-20 animate-bounce text-white/80">
+            <i data-lucide="chevron-down" class="w-10 h-10"></i>
+        </div>
+    </header>
+
+    <section class="py-24 px-6 relative bg-cream">
+        <div class="max-w-4xl mx-auto text-center fade-up relative z-10">
+             <i data-lucide="quote" class="w-10 h-10 mx-auto text-gold-400 mb-6 opacity-60"></i>
+            <p class="font-serif text-3xl md:text-5xl leading-relaxed text-forest-900 font-semibold italic">
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do."
+            </p>
+            <div class="mt-8 flex justify-center items-center gap-4 opacity-60">
+                <div class="h-px w-16 bg-forest-800"></div>
+                 <i data-lucide="heart" class="w-4 h-4 text-gold-400 fill-current"></i>
+                <div class="h-px w-16 bg-forest-800"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-forest-800 text-white relative overflow-hidden">
+        <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-forest-900/50 to-transparent"></div>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-20 items-center">
+            
+            <div class="text-center lg:text-left fade-up">
+                <h2 class="font-script text-6xl text-gold-400 mb-10 drop-shadow-md script-font-fix">Falta muy poco...</h2>
+                <div class="grid grid-cols-4 gap-4 max-w-lg mx-auto lg:mx-0">
+                    <div class="bg-forest-900/40 backdrop-blur-md rounded-2xl p-4 border border-gold-400/20 shadow-lg">
+                        <span id="days" class="block text-3xl font-serif font-bold text-white mb-1">00</span>
+                        <span class="text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Días</span>
+                    </div>
+                     <div class="bg-forest-900/40 backdrop-blur-md rounded-2xl p-4 border border-gold-400/20 shadow-lg">
+                        <span id="hours" class="block text-3xl font-serif font-bold text-white mb-1">00</span>
+                        <span class="text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Hrs</span>
+                    </div>
+                     <div class="bg-forest-900/40 backdrop-blur-md rounded-2xl p-4 border border-gold-400/20 shadow-lg">
+                        <span id="minutes" class="block text-3xl font-serif font-bold text-white mb-1">00</span>
+                        <span class="text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Min</span>
+                    </div>
+                     <div class="bg-forest-900/40 backdrop-blur-md rounded-2xl p-4 border border-gold-400/20 shadow-lg">
+                        <span id="seconds" class="block text-3xl font-serif font-bold text-white mb-1">00</span>
+                        <span class="text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Seg</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-cream rounded-[2rem] p-8 shadow-2xl border-4 border-double border-gold-400/30 text-forest-900 relative transform md:rotate-2 hover:rotate-0 transition-all duration-500 fade-up delay-150">
+                <div class="text-center mb-8">
+                    <h3 class="font-serif text-4xl font-bold text-forest-900">Diciembre</h3>
+                    <p class="text-gold-600 text-sm font-bold tracking-[0.4em] uppercase mt-2">2026</p>
+                </div>
+                
+                <div class="grid grid-cols-7 gap-2 text-center font-sans">
+                    <div class="text-forest-800 font-bold text-xs uppercase py-2">L</div>
+                    <div class="text-forest-800 font-bold text-xs uppercase py-2">M</div>
+                    <div class="text-forest-800 font-bold text-xs uppercase py-2">M</div>
+                    <div class="text-forest-800 font-bold text-xs uppercase py-2">J</div>
+                    <div class="text-forest-800 font-bold text-xs uppercase py-2">V</div>
+                    <div class="text-forest-800 font-bold text-xs uppercase py-2">S</div>
+                    <div class="text-forest-800 font-bold text-xs uppercase py-2 text-gold-600">D</div>
+
+                    <span></span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">1</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">2</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">3</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">4</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">5</span>
+                    <span class="text-gold-600 font-bold p-2">6</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">7</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">8</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">9</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">10</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">11</span>
+                    
+                    <div class="relative flex items-center justify-center p-1">
+                        <span class="relative z-10 w-10 h-10 flex items-center justify-center bg-yellow-400 text-forest-900 rounded-full font-extrabold shadow-glow text-lg">
+                            12
+                        </span>
+                    </div>
+
+                    <span class="text-gold-600 font-bold p-2">13</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">14</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">15</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">16</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">17</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">18</span>
+                    <span class="text-gold-600 font-bold p-2">19</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">20</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">21</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">22</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">23</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">24</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">25</span>
+                    <span class="text-gold-600 font-bold p-2">26</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">27</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">28</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">29</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">30</span>
+                    <span class="text-forest-900 font-medium p-2 opacity-50">31</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-4 bg-cream-darker relative">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-center font-script text-6xl text-forest-900 mb-16 fade-up drop-shadow-sm script-font-fix">Detalles del Evento</h2>
+            
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="group bg-cream p-10 rounded-[3rem] shadow-xl border-2 border-white hover:border-gold-400/50 transition-all duration-500 fade-up">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 bg-forest-800 rounded-full flex items-center justify-center text-gold-400 mb-6 shadow-xl group-hover:scale-110 transition-transform">
+                            <i data-lucide="church" class="w-10 h-10"></i>
+                        </div>
+                        <h3 class="font-serif text-3xl font-bold text-forest-900 mb-2">Ceremonia Religiosa</h3>
+                        <div class="bg-gold-400/10 px-4 py-1 rounded-full mb-6">
+                             <p class="text-gold-600 font-bold uppercase tracking-widest text-xs">18:00 Horas</p>
+                        </div>
+                        <p class="text-forest-900 font-medium mb-6 leading-relaxed">
+                           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.<br>
+                            <span class="text-sm opacity-80">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</span>
+                        </p>
+                        <a href="https://maps.app.goo.gl/vzv3fH3ketDuHgmg8" target="_blank" class="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-forest-800 border-b-2 border-gold-400 pb-1 hover:text-gold-600 transition-all">
+                            <span>Ver Ubicación</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group bg-cream p-10 rounded-[3rem] shadow-xl border-2 border-white hover:border-gold-400/50 transition-all duration-500 fade-up delay-150">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 bg-forest-800 rounded-full flex items-center justify-center text-gold-400 mb-6 shadow-xl group-hover:scale-110 transition-transform">
+                            <i data-lucide="wine" class="w-10 h-10"></i>
+                        </div>
+                        <h3 class="font-serif text-3xl font-bold text-forest-900 mb-2">Recepción & Fiesta</h3>
+                         <div class="bg-gold-400/10 px-4 py-1 rounded-full mb-6">
+                             <p class="text-gold-600 font-bold uppercase tracking-widest text-xs">20:30 Horas</p>
+                        </div>
+                        <p class="text-forest-900 font-medium mb-6 leading-relaxed">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.<br>
+                            <span class="text-sm opacity-80">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</span>
+                        </p>
+                         <a href="https://maps.app.goo.gl/vzv3fH3ketDuHgmg8" target="_blank" class="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-forest-800 border-b-2 border-gold-400 pb-1 hover:text-gold-600 transition-all">
+                            <span>Ver Ubicación</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-cream overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="font-script text-6xl text-forest-900 mb-10 fade-up drop-shadow-sm script-font-fix">Momentos Juntos</h2>
+            <div class="relative w-full h-[600px] rounded-[3rem] overflow-hidden shadow-2xl border-[6px] border-white fade-up">
+                <div id="carousel-container">
+                    <div class="slide active"><img src="https://images.unsplash.com/photo-1621621667797-e06afc217fb0?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover"></div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover"></div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover"></div>
+                </div>
+                
+                <div class="absolute bottom-8 right-8 flex gap-4 z-20">
+                    <button onclick="changeSlide(-1)" class="w-12 h-12 bg-forest-800/80 hover:bg-gold-400 rounded-full flex items-center justify-center text-white transition-all shadow-lg backdrop-blur-sm"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+                    <button onclick="changeSlide(1)" class="w-12 h-12 bg-forest-800/80 hover:bg-gold-400 rounded-full flex items-center justify-center text-white transition-all shadow-lg backdrop-blur-sm"><i data-lucide="arrow-right" class="w-6 h-6"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 relative bg-forest-900 text-center px-6 overflow-hidden font-sans">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/fancy-cushion.png')]"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold-400/20 rounded-full blur-[150px] pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-3xl mx-auto fade-up">
+            <div class="inline-flex items-center gap-3 border-2 border-gold-400/30 rounded-full px-8 py-3 mb-8 bg-forest-800/50 backdrop-blur-md">
+                <i data-lucide="mail" class="w-5 h-5 text-gold-400"></i>
+                <span class="text-gold-100 text-sm uppercase tracking-[0.3em] font-bold">Confirmación Requerida</span>
+            </div>
+            
+            <h2 class="font-serif text-5xl md:text-7xl text-white mb-6 font-bold leading-tight">
+                ¿Nos Acompañas?
+            </h2>
+            
+            <p class="text-cream-darker text-xl font-medium mb-12 leading-relaxed max-w-xl mx-auto">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+                <br><span class="text-gold-400 font-bold text-2xl mt-4 block drop-shadow-md">1 de Noviembre, 2026</span>
+            </p>
+
+            <div class="group relative inline-block">
+                 <div class="absolute -inset-1 bg-gold-400 rounded-full blur-md opacity-40 group-hover:opacity-70 transition duration-500"></div>
+                <a href="https://forms.gle/qnTUiAu6ugyXpPZ56" target="_blank" 
+                   class="relative flex items-center justify-center gap-4 bg-gradient-to-r from-gold-400 to-gold-600 text-forest-900 px-12 py-5 rounded-full text-lg uppercase tracking-[0.2em] font-extrabold shadow-xl hover:scale-[1.02] transition-all duration-300">
+                    <span>Confirmar Asistencia</span>
+                    <i data-lucide="arrow-up-right" class="w-6 h-6 group-hover:rotate-45 transition-transform stroke-[3px]"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-forest-900 text-center border-t border-gold-400/20">
+        <h3 class="font-script text-5xl text-gold-400 drop-shadow-sm mb-4 script-font-fix">Lorem & Lorem</h3>
+        <p class="text-white/60 text-sm uppercase tracking-[0.3em]">Con amor, 2026</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        const targetDate = new Date('2026-12-12T18:00:00').getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if(diff > 0) {
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById('days').innerText = d < 10 ? '0'+d : d;
+                document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
+                document.getElementById('minutes').innerText = m < 10 ? '0'+m : m;
+                document.getElementById('seconds').innerText = s < 10 ? '0'+s : s;
+            }
+        }, 1000);
+
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        function changeSlide(n) {
+            slides[slideIndex].classList.remove('active');
+            slideIndex = (slideIndex + n + slides.length) % slides.length;
+            slides[slideIndex].classList.add('active');
+        }
+        setInterval(() => changeSlide(1), 5000);
+    </script>
+</body>
+</html>
