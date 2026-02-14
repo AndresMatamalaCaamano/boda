@@ -3,316 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sofía & Alejandro | Nuestra Boda</title>
+    <title>Boda de Sofía & Mateo - Confirmación</title>
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        forest: { 900: '#1a332a', 800: '#24423a', 700: '#2d5248' },
-                        gold: { 400: '#cba157', 500: '#b38b42', 600: '#967233', bright: '#FFD700' },
-                        cream: { DEFAULT: '#fbf9f4', darker: '#f2ede4' }
-                    },
-                    fontFamily: {
-                        script: ['"Great Vibes"', 'cursive'],
-                        serif: ['"Cormorant Garamond"', 'serif'],
-                        sans: ['"Montserrat"', 'sans-serif'],
-                    },
-                    boxShadow: { 'glow': '0 0 20px rgba(255, 215, 0, 0.6)' },
-                    screens: {
-                        'xs': '375px', // Punto de quiebre extra para móviles pequeños
-                    }
-                }
-            }
-        }
-    </script>
 
     <style>
-        .script-font-fix { line-height: 1.2 !important; padding: 0.2em 0; }
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 50; mix-blend-mode: multiply;
+        body { font-family: 'Montserrat', sans-serif; }
+        h1, h2, h3, .font-serif { font-family: 'Cormorant Garamond', serif; }
+        
+        /* Efecto de selección de menú */
+        .menu-card {
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            border: 2px solid transparent;
+            transform: scale(0.98);
         }
-        .text-rich-gold {
-            background: linear-gradient(to right, #cba157, #ebd3a5, #cba157, #a37b32);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        .menu-card:hover {
+            opacity: 1;
+            transform: scale(1);
         }
-        .fade-up { opacity: 0; transform: translateY(25px); transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .fade-up.visible { opacity: 1; transform: translateY(0); }
-        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease-in-out, transform 8s linear; transform: scale(1.05); }
-        .slide.active { opacity: 1; transform: scale(1); }
-        html { scroll-behavior: smooth; }
+        .menu-card.selected {
+            opacity: 1;
+            border-color: #b45309; /* amber-700 (Dorado oscuro) */
+            transform: scale(1.02);
+            background-color: #fffbeb; /* amber-50 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        /* Icono de check */
+        .menu-check { display: none; }
+        .menu-card.selected .menu-check { display: flex; }
+        
+        /* Animaciones */
+        .fade-in-up { animation: fadeInUp 1s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        .loader {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #b45309;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Ajuste para que el calendario no se vea gigante en móviles */
+        .calendar-day {
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
-<body class="bg-cream text-forest-900 antialiased overflow-x-hidden font-sans">
+<body class="bg-[#f5f5f4] text-stone-800">
 
-    <header class="relative h-screen min-h-[600px] w-full flex flex-col items-center justify-center text-center overflow-hidden px-4">
+    <!-- HERO -->
+    <header class="relative h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-black/40 z-10"></div>
-            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1920&q=80" 
-                 class="w-full h-full object-cover animate-[pulse_60s_linear_infinite_reverse] scale-110" alt="Fondo Boda">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0202128?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover opacity-90" alt="Boda">
+            <div class="absolute inset-0 bg-gradient-to-b from-stone-900/40 via-transparent to-[#f5f5f4]"></div>
         </div>
 
-        <div class="relative z-20 text-white fade-up delay-300 w-full max-w-7xl mx-auto">
-            <p class="font-sans font-medium tracking-[0.3em] text-xs md:text-sm uppercase mb-4 text-gold-400 drop-shadow-md">Nos Casamos</p>
-            
-            <h1 class="script-font-fix font-script text-5xl xs:text-6xl sm:text-7xl md:text-9xl lg:text-[10rem] text-rich-gold drop-shadow-2xl leading-none md:leading-tight">
-                Lorem <span class="text-white block sm:inline my-2 sm:my-0 text-4xl sm:text-7xl md:text-8xl">&</span> Lorem 
-            </h1>
-            
-            <div class="inline-block border-t border-b border-gold-400/50 py-2 px-6 md:py-3 md:px-8 mt-6 backdrop-blur-sm bg-black/10 rounded-full">
-                <p class="font-serif text-lg xs:text-xl md:text-3xl font-semibold text-white drop-shadow-md tracking-wide">
-                    12 de Diciembre, 2026
-                </p>
+        <div class="relative z-10 fade-in-up text-stone-900" style="animation-delay: 0.2s;">
+            <div class="bg-white/90 backdrop-blur-md py-2 px-6 rounded-full inline-block mb-6 shadow-md border border-white">
+                <p class="text-[10px] md:text-xs tracking-[0.3em] uppercase text-stone-600 font-bold">Save the Date</p>
             </div>
-        </div>
-
-        <div class="absolute bottom-8 md:bottom-12 z-20 animate-bounce text-white/80">
-            <i data-lucide="chevron-down" class="w-8 h-8 md:w-10 md:h-10"></i>
+            <h1 class="text-6xl sm:text-7xl md:text-9xl font-serif mb-2 drop-shadow-lg text-white md:text-stone-900">S & M</h1>
+            <p class="text-2xl md:text-3xl font-serif italic text-white md:text-rose-900 font-medium">Sofía y Mateo</p>
+            
+            <div class="mt-8 md:mt-12 flex items-center justify-center gap-4 md:gap-8 font-serif text-lg md:text-xl border-t border-b border-stone-800/30 py-4 max-w-[280px] md:max-w-xs mx-auto text-stone-800">
+                <span>OCT</span>
+                <span class="text-3xl md:text-4xl font-light">18</span>
+                <span>2025</span>
+            </div>
         </div>
     </header>
 
-    <section class="py-16 md:py-24 px-6 relative bg-cream">
-        <div class="max-w-4xl mx-auto text-center fade-up relative z-10">
-             <i data-lucide="quote" class="w-8 h-8 md:w-10 md:h-10 mx-auto text-gold-400 mb-6 opacity-60"></i>
-            <p class="font-serif text-2xl md:text-5xl leading-relaxed text-forest-900 font-semibold italic px-2">
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do."
-            </p>
-            <div class="mt-8 flex justify-center items-center gap-4 opacity-60">
-                <div class="h-px w-12 md:w-16 bg-forest-800"></div>
-                 <i data-lucide="heart" class="w-4 h-4 text-gold-400 fill-current"></i>
-                <div class="h-px w-12 md:w-16 bg-forest-800"></div>
+    <!-- CUENTA REGRESIVA & CARRUSEL -->
+    <section class="max-w-6xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <!-- Carrusel -->
+        <div class="relative h-64 sm:h-96 md:h-[550px] rounded-2xl overflow-hidden shadow-2xl md:rotate-1 hover:rotate-0 transition-transform duration-500 border-[6px] md:border-[10px] border-white bg-white">
+            <div id="slider" class="h-full w-full relative">
+                <!-- Las imágenes se inyectan con JS -->
+            </div>
+             <button onclick="prevSlide()" class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white p-2 md:p-3 rounded-full transition text-stone-800 backdrop-blur-sm shadow-sm z-20"><i data-lucide="chevron-left"></i></button>
+             <button onclick="nextSlide()" class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white p-2 md:p-3 rounded-full transition text-stone-800 backdrop-blur-sm shadow-sm z-20"><i data-lucide="chevron-right"></i></button>
+        </div>
+
+        <!-- Texto y Countdown -->
+        <div class="text-center md:text-left">
+            <h2 class="text-4xl md:text-6xl font-serif mb-6 text-stone-800 leading-tight">Celebra nuestro <span class="text-rose-900 italic">amor</span></h2>
+            <p class="text-stone-600 mb-10 leading-relaxed font-light text-base md:text-lg md:border-l-4 md:border-rose-200 md:pl-6">Estamos contando los segundos para compartir este momento único con las personas que más queremos. Tu presencia es el mejor regalo.</p>
+            
+            <div id="countdown" class="grid grid-cols-4 gap-2 md:gap-4">
+                <!-- JS llena esto -->
             </div>
         </div>
     </section>
 
-    <section class="py-12 md:py-24 bg-forest-800 text-white relative overflow-hidden">
-        <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-forest-900/50 to-transparent"></div>
-
-        <div class="max-w-6xl mx-auto px-4 md:px-6 relative z-10 grid lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+    <!-- ITINERARIO -->
+    <section class="bg-white py-16 md:py-24 shadow-sm border-y border-stone-200">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-center text-4xl md:text-5xl font-serif mb-12 md:mb-16 text-stone-800 tracking-wide">Itinerario</h2>
             
-            <div class="text-center lg:text-left fade-up">
-                <h2 class="font-script text-5xl md:text-6xl text-gold-400 mb-8 drop-shadow-md script-font-fix">Falta muy poco...</h2>
-                <div class="grid grid-cols-4 gap-2 md:gap-4 max-w-lg mx-auto lg:mx-0">
-                    <div class="bg-forest-900/40 backdrop-blur-md rounded-xl md:rounded-2xl p-2 md:p-4 border border-gold-400/20 shadow-lg">
-                        <span id="days" class="block text-xl md:text-3xl font-serif font-bold text-white mb-1">00</span>
-                        <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Días</span>
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 text-center items-start">
+                <!-- Ceremonia -->
+                <div class="bg-stone-50 p-6 md:p-8 rounded-xl hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-white rounded-full flex items-center justify-center text-rose-900 mx-auto mb-4 shadow-sm">
+                        <i data-lucide="church" stroke-width="1.5" size="24"></i>
                     </div>
-                     <div class="bg-forest-900/40 backdrop-blur-md rounded-xl md:rounded-2xl p-2 md:p-4 border border-gold-400/20 shadow-lg">
-                        <span id="hours" class="block text-xl md:text-3xl font-serif font-bold text-white mb-1">00</span>
-                        <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Hrs</span>
+                    <h3 class="text-xl md:text-2xl font-serif text-stone-800 mb-2">Ceremonia</h3>
+                    <p class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-rose-700 mb-4">16:00 HRS</p>
+                    <p class="text-stone-500 text-sm leading-relaxed mb-4">Catedral de Santa María<br>Av. Principal 123</p>
+                    <a href="#" class="text-stone-900 text-[10px] md:text-xs font-bold border-b border-stone-900 hover:text-rose-700 hover:border-rose-700 transition-colors pb-0.5 uppercase">VER MAPA</a>
+                </div>
+
+                <!-- Calendario Visual -->
+                <div class="border border-stone-200 p-6 md:p-8 rounded-xl bg-white shadow-md relative z-10 md:scale-105">
+                    <h3 class="text-xl md:text-2xl font-serif mb-4 md:mb-6 text-rose-900 border-b border-stone-100 pb-2">Octubre</h3>
+                    <div class="grid grid-cols-7 gap-1 md:gap-2 text-[8px] md:text-[10px] font-bold text-stone-400 mb-4 tracking-widest uppercase">
+                        <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
                     </div>
-                     <div class="bg-forest-900/40 backdrop-blur-md rounded-xl md:rounded-2xl p-2 md:p-4 border border-gold-400/20 shadow-lg">
-                        <span id="minutes" class="block text-xl md:text-3xl font-serif font-bold text-white mb-1">00</span>
-                        <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Min</span>
-                    </div>
-                     <div class="bg-forest-900/40 backdrop-blur-md rounded-xl md:rounded-2xl p-2 md:p-4 border border-gold-400/20 shadow-lg">
-                        <span id="seconds" class="block text-xl md:text-3xl font-serif font-bold text-white mb-1">00</span>
-                        <span class="text-[9px] md:text-[10px] uppercase tracking-widest text-gold-400 font-semibold">Seg</span>
+                    <div id="calendar-grid" class="grid grid-cols-7 gap-1 md:gap-2 font-serif text-stone-600 text-xs md:text-sm">
+                        <!-- JS -->
                     </div>
                 </div>
-            </div>
 
-            <div class="bg-cream rounded-[2rem] p-4 md:p-10 shadow-2xl border-4 border-double border-gold-400/30 text-forest-900 relative transform md:rotate-2 hover:rotate-0 transition-all duration-500 fade-up delay-150 max-w-md mx-auto lg:max-w-none w-full">
-                <div class="text-center mb-4 md:mb-8">
-                    <h3 class="font-serif text-3xl md:text-4xl font-bold text-forest-900">Diciembre</h3>
-                    <p class="text-gold-600 text-xs md:text-sm font-bold tracking-[0.4em] uppercase mt-2">2026</p>
-                </div>
-                
-                <div class="grid grid-cols-7 gap-y-1 gap-x-0 md:gap-2 text-center font-sans text-sm md:text-base items-center">
-                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">L</div>
-                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">M</div>
-                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">M</div>
-                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">J</div>
-                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">V</div>
-                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-forest-800 tracking-wider">S</div>
-                    <div class="font-bold text-[10px] md:text-xs uppercase py-2 text-gold-600 tracking-wider">D</div>
-
-                    <span></span>
-                    <span class="p-1 md:p-2 opacity-50">1</span>
-                    <span class="p-1 md:p-2 opacity-50">2</span>
-                    <span class="p-1 md:p-2 opacity-50">3</span>
-                    <span class="p-1 md:p-2 opacity-50">4</span>
-                    <span class="p-1 md:p-2 opacity-50">5</span>
-                    <span class="text-gold-600 font-bold p-1 md:p-2">6</span>
-                    <span class="p-1 md:p-2 opacity-50">7</span>
-                    <span class="p-1 md:p-2 opacity-50">8</span>
-                    <span class="p-1 md:p-2 opacity-50">9</span>
-                    <span class="p-1 md:p-2 opacity-50">10</span>
-                    <span class="p-1 md:p-2 opacity-50">11</span>
-                    
-                    <div class="relative flex items-center justify-center p-0.5 md:p-1 w-full h-full">
-                        <span class="relative z-10 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-yellow-400 text-forest-900 rounded-full font-extrabold shadow-glow text-sm md:text-lg">
-                            12
-                        </span>
+                <!-- Fiesta -->
+                <div class="bg-stone-50 p-6 md:p-8 rounded-xl hover:shadow-lg transition-shadow duration-300">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-white rounded-full flex items-center justify-center text-rose-900 mx-auto mb-4 shadow-sm">
+                        <i data-lucide="glass-water" stroke-width="1.5" size="24"></i>
                     </div>
-
-                    <span class="text-gold-600 font-bold p-1 md:p-2">13</span>
-                    <span class="p-1 md:p-2 opacity-50">14</span>
-                    <span class="p-1 md:p-2 opacity-50">15</span>
-                    <span class="p-1 md:p-2 opacity-50">16</span>
-                    <span class="p-1 md:p-2 opacity-50">17</span>
-                    <span class="p-1 md:p-2 opacity-50">18</span>
-                    <span class="text-gold-600 font-bold p-1 md:p-2">19</span>
-                    <span class="p-1 md:p-2 opacity-50">20</span>
-                    <span class="p-1 md:p-2 opacity-50">21</span>
-                    <span class="p-1 md:p-2 opacity-50">22</span>
-                    <span class="p-1 md:p-2 opacity-50">23</span>
-                    <span class="p-1 md:p-2 opacity-50">24</span>
-                    <span class="p-1 md:p-2 opacity-50">25</span>
-                    <span class="text-gold-600 font-bold p-1 md:p-2">26</span>
-                    <span class="p-1 md:p-2 opacity-50">27</span>
-                    <span class="p-1 md:p-2 opacity-50">28</span>
-                    <span class="p-1 md:p-2 opacity-50">29</span>
-                    <span class="p-1 md:p-2 opacity-50">30</span>
-                    <span class="p-1 md:p-2 opacity-50">31</span>
+                    <h3 class="text-xl md:text-2xl font-serif text-stone-800 mb-2">Recepción</h3>
+                    <p class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-rose-700 mb-4">19:00 HRS</p>
+                    <p class="text-stone-500 text-sm leading-relaxed mb-4">Hacienda Los Olivos<br>Km 45 Vía al Valle</p>
+                    <a href="#" class="text-stone-900 text-[10px] md:text-xs font-bold border-b border-stone-900 hover:text-rose-700 hover:border-rose-700 transition-colors pb-0.5 uppercase">VER MAPA</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-16 md:py-24 px-4 bg-cream-darker relative">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-center font-script text-5xl md:text-6xl text-forest-900 mb-10 md:mb-16 fade-up drop-shadow-sm script-font-fix">Detalles del Evento</h2>
+    <!-- RSVP -->
+    <section class="py-16 md:py-24 bg-[#e7e5e4]" id="rsvp">
+        <div class="max-w-4xl mx-auto px-4">
             
-            <div class="grid md:grid-cols-2 gap-8 md:gap-10">
-                
-                <div class="group bg-cream p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-xl border-2 border-white hover:border-gold-400/50 transition-all duration-500 fade-up">
-                    <div class="flex flex-col items-center text-center">
-                        <div class="w-16 h-16 md:w-20 md:h-20 bg-forest-800 rounded-full flex items-center justify-center text-gold-400 mb-4 md:mb-6 shadow-xl group-hover:scale-110 transition-transform">
-                            <i data-lucide="church" class="w-8 h-8 md:w-10 md:h-10"></i>
+            <div class="text-center mb-8 md:mb-12">
+                <span class="bg-stone-800 text-white px-3 py-1 text-[9px] md:text-[10px] tracking-[0.2em] uppercase font-bold rounded mb-4 inline-block">Confirmación</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-stone-800">R.S.V.P</h2>
+                <p class="mt-4 text-stone-600 font-light text-base md:text-lg max-w-lg mx-auto">Por favor ayúdanos a organizar mejor este día completando tus datos y preferencia de menú.</p>
+            </div>
+
+            <form id="rsvp-form" class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-stone-800 p-4 md:p-6 text-center">
+                    <p class="text-white/80 text-xs md:text-sm uppercase tracking-wider font-light">Formulario de Asistencia</p>
+                </div>
+
+                <div class="p-6 md:p-12">
+                    <!-- Datos Personales -->
+                    <div class="grid md:grid-cols-2 gap-4 md:gap-6 mb-10 md:mb-12">
+                        <div class="bg-stone-50 p-4 rounded-lg border border-stone-200 focus-within:border-stone-400 focus-within:bg-white transition-all">
+                            <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1">Nombre</label>
+                            <input type="text" name="nombre" required 
+                                class="w-full bg-transparent border-none p-0 text-base md:text-lg font-serif text-stone-800 focus:ring-0 placeholder-stone-300" 
+                                placeholder="Escribe aquí...">
                         </div>
-                        <h3 class="font-serif text-2xl md:text-3xl font-bold text-forest-900 mb-2">Ceremonia Religiosa</h3>
-                        <div class="bg-gold-400/10 px-4 py-1 rounded-full mb-4 md:mb-6">
-                             <p class="text-gold-600 font-bold uppercase tracking-widest text-xs">18:00 Horas</p>
+                        <div class="bg-stone-50 p-4 rounded-lg border border-stone-200 focus-within:border-stone-400 focus-within:bg-white transition-all">
+                            <label class="block text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1">Apellido</label>
+                            <input type="text" name="apellido" required 
+                                class="w-full bg-transparent border-none p-0 text-base md:text-lg font-serif text-stone-800 focus:ring-0 placeholder-stone-300" 
+                                placeholder="Escribe aquí...">
                         </div>
-                        <p class="text-forest-900 font-medium mb-6 leading-relaxed text-sm md:text-base">
-                           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.<br>
-                            <span class="text-xs md:text-sm opacity-80">Lorem ipsum dolor sit amet.</span>
+                    </div>
+
+                    <!-- Selección de Menú -->
+                    <div class="mb-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="h-px bg-stone-200 flex-1"></div>
+                            <span class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-stone-400">Selecciona tu Menú</span>
+                            <div class="h-px bg-stone-200 flex-1"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+                            <!-- Opción 1 -->
+                            <div class="menu-card cursor-pointer bg-white rounded-xl p-4 border border-stone-200 text-center group" onclick="selectMenu('Carne', this)">
+                                <div class="w-full h-32 rounded-lg overflow-hidden mb-3 relative">
+                                     <div class="absolute inset-0 bg-stone-900/10"></div>
+                                     <div class="menu-check absolute inset-0 bg-stone-900/40 items-center justify-center text-white backdrop-blur-[2px]">
+                                         <i data-lucide="check-circle-2" size="32"></i>
+                                     </div>
+                                     <img src="https://images.unsplash.com/photo-1546241072-48010ad2862c?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+                                </div>
+                                <h4 class="font-serif text-lg md:text-xl text-stone-800">Lomo Fino</h4>
+                                <p class="text-[10px] text-stone-500 font-medium">Salsa de finas hierbas</p>
+                            </div>
+
+                            <!-- Opción 2 -->
+                            <div class="menu-card cursor-pointer bg-white rounded-xl p-4 border border-stone-200 text-center group" onclick="selectMenu('Pollo', this)">
+                                <div class="w-full h-32 rounded-lg overflow-hidden mb-3 relative">
+                                     <div class="absolute inset-0 bg-stone-900/10"></div>
+                                     <div class="menu-check absolute inset-0 bg-stone-900/40 items-center justify-center text-white backdrop-blur-[2px]">
+                                         <i data-lucide="check-circle-2" size="32"></i>
+                                     </div>
+                                     <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+                                </div>
+                                <h4 class="font-serif text-lg md:text-xl text-stone-800">Pollo</h4>
+                                <p class="text-[10px] text-stone-500 font-medium">Salsa de champiñones</p>
+                            </div>
+
+                            <!-- Opción 3 -->
+                            <div class="menu-card cursor-pointer bg-white rounded-xl p-4 border border-stone-200 text-center group" onclick="selectMenu('Vegetariano', this)">
+                                <div class="w-full h-32 rounded-lg overflow-hidden mb-3 relative">
+                                     <div class="absolute inset-0 bg-stone-900/10"></div>
+                                     <div class="menu-check absolute inset-0 bg-stone-900/40 items-center justify-center text-white backdrop-blur-[2px]">
+                                         <i data-lucide="check-circle-2" size="32"></i>
+                                     </div>
+                                     <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+                                </div>
+                                <h4 class="font-serif text-lg md:text-xl text-stone-800">Risotto</h4>
+                                <p class="text-[10px] text-stone-500 font-medium">Calabaza & Parmesano</p>
+                            </div>
+                        </div>
+                        
+                        <input type="hidden" id="menu-input" name="menu" required>
+                        <p id="menu-error" class="hidden text-center text-amber-700 text-[10px] mt-4 bg-amber-50 py-2 rounded border border-amber-200 font-medium uppercase tracking-wide">
+                            ⚠️ Selecciona una opción de menú
                         </p>
-                        <a href="https://maps.app.goo.gl/vzv3fH3ketDuHgmg8" target="_blank" class="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-forest-800 border-b-2 border-gold-400 pb-1 hover:text-gold-600 transition-all">
-                            <span>Ver Ubicación</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                        </a>
+                    </div>
+
+                    <!-- Botón -->
+                    <div class="text-center">
+                        <button type="submit" id="submit-btn" class="bg-amber-700 text-white px-10 md:px-16 py-4 rounded-lg font-bold tracking-[0.2em] hover:bg-amber-800 transition-all duration-300 hover:shadow-lg uppercase text-xs md:text-sm w-full md:w-auto">
+                            Confirmar Asistencia
+                        </button>
+                        <p id="rsvp-status" class="mt-4 text-xs font-medium hidden"></p>
                     </div>
                 </div>
+            </form>
 
-                <div class="group bg-cream p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-xl border-2 border-white hover:border-gold-400/50 transition-all duration-500 fade-up delay-150">
-                    <div class="flex flex-col items-center text-center">
-                        <div class="w-16 h-16 md:w-20 md:h-20 bg-forest-800 rounded-full flex items-center justify-center text-gold-400 mb-4 md:mb-6 shadow-xl group-hover:scale-110 transition-transform">
-                            <i data-lucide="wine" class="w-8 h-8 md:w-10 md:h-10"></i>
-                        </div>
-                        <h3 class="font-serif text-2xl md:text-3xl font-bold text-forest-900 mb-2">Recepción & Fiesta</h3>
-                         <div class="bg-gold-400/10 px-4 py-1 rounded-full mb-4 md:mb-6">
-                             <p class="text-gold-600 font-bold uppercase tracking-widest text-xs">20:30 Horas</p>
-                        </div>
-                        <p class="text-forest-900 font-medium mb-6 leading-relaxed text-sm md:text-base">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.<br>
-                            <span class="text-xs md:text-sm opacity-80">Lorem ipsum dolor sit amet.</span>
-                        </p>
-                         <a href="https://maps.app.goo.gl/vzv3fH3ketDuHgmg8" target="_blank" class="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-forest-800 border-b-2 border-gold-400 pb-1 hover:text-gold-600 transition-all">
-                            <span>Ver Ubicación</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                        </a>
-                    </div>
+            <!-- Mensaje de éxito -->
+            <div id="success-msg" class="hidden bg-white p-8 md:p-12 rounded-2xl shadow-2xl text-center border-t-8 border-green-600 mt-8">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="check" size="40"></i>
+                </div>
+                <h3 class="text-2xl md:text-3xl font-serif text-stone-800 mb-2">¡Datos Recibidos!</h3>
+                <p class="text-stone-600 text-sm md:text-base">Tu confirmación ha sido guardada exitosamente.</p>
+                <div class="mt-8 pt-8 border-t border-stone-100">
+                    <p class="text-stone-400 font-serif italic text-lg md:text-xl">"Gracias por acompañarnos"</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-16 md:py-24 bg-cream overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 text-center">
-            <h2 class="font-script text-5xl md:text-6xl text-forest-900 mb-8 md:mb-10 fade-up drop-shadow-sm script-font-fix">Momentos Juntos</h2>
-            <div class="relative w-full h-[300px] sm:h-[400px] md:h-[600px] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border-[4px] md:border-[6px] border-white fade-up">
-                <div id="carousel-container">
-                    <div class="slide active"><img src="https://images.unsplash.com/photo-1621621667797-e06afc217fb0?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover"></div>
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover"></div>
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover"></div>
-                </div>
-                
-                <div class="absolute bottom-4 right-4 md:bottom-8 md:right-8 flex gap-2 md:gap-4 z-20">
-                    <button onclick="changeSlide(-1)" class="w-10 h-10 md:w-12 md:h-12 bg-forest-800/80 hover:bg-gold-400 rounded-full flex items-center justify-center text-white transition-all shadow-lg backdrop-blur-sm"><i data-lucide="arrow-left" class="w-5 h-5 md:w-6 md:h-6"></i></button>
-                    <button onclick="changeSlide(1)" class="w-10 h-10 md:w-12 md:h-12 bg-forest-800/80 hover:bg-gold-400 rounded-full flex items-center justify-center text-white transition-all shadow-lg backdrop-blur-sm"><i data-lucide="arrow-right" class="w-5 h-5 md:w-6 md:h-6"></i></button>
-                </div>
-            </div>
+    <footer class="bg-[#292524] text-stone-400 py-12 text-center">
+        <div class="mb-4 opacity-40">
+             <i data-lucide="heart" size="20" class="mx-auto"></i>
         </div>
-    </section>
-
-    <section class="py-20 md:py-32 relative bg-forest-900 text-center px-4 overflow-hidden font-sans">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/fancy-cushion.png')]"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-gold-400/20 rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
-
-        <div class="relative z-10 max-w-3xl mx-auto fade-up">
-            <div class="inline-flex items-center gap-2 md:gap-3 border-2 border-gold-400/30 rounded-full px-4 py-2 md:px-8 md:py-3 mb-6 md:mb-8 bg-forest-800/50 backdrop-blur-md">
-                <i data-lucide="mail" class="w-4 h-4 md:w-5 md:h-5 text-gold-400"></i>
-                <span class="text-gold-100 text-[10px] md:text-sm uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold">Confirmación Requerida</span>
-            </div>
-            
-            <h2 class="font-serif text-4xl md:text-7xl text-white mb-6 font-bold leading-tight">
-                ¿Nos Acompañas?
-            </h2>
-            
-            <p class="text-cream-darker text-lg md:text-xl font-medium mb-10 md:mb-12 leading-relaxed max-w-xl mx-auto px-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-                <br><span class="text-gold-400 font-bold text-xl md:text-2xl mt-4 block drop-shadow-md">1 de Noviembre, 2026</span>
-            </p>
-
-            <div class="group relative inline-block w-full max-w-xs md:max-w-none">
-                 <div class="absolute -inset-1 bg-gold-400 rounded-full blur-md opacity-40 group-hover:opacity-70 transition duration-500"></div>
-                <a href="https://forms.gle/qnTUiAu6ugyXpPZ56" target="_blank" 
-                   class="relative flex items-center justify-center gap-3 md:gap-4 bg-gradient-to-r from-gold-400 to-gold-600 text-forest-900 px-6 py-4 md:px-12 md:py-5 rounded-full text-sm md:text-lg uppercase tracking-[0.15em] md:tracking-[0.2em] font-extrabold shadow-xl hover:scale-[1.02] transition-all duration-300 w-full md:w-auto">
-                    <span>Confirmar Asistencia</span>
-                    <i data-lucide="arrow-up-right" class="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-45 transition-transform stroke-[3px]"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-12 bg-forest-900 text-center border-t border-gold-400/20 px-4">
-        <h3 class="font-script text-4xl md:text-5xl text-gold-400 drop-shadow-sm mb-4 script-font-fix">Lorem & Lorem</h3>
-        <p class="text-white/60 text-xs md:text-sm uppercase tracking-[0.3em]">Con amor, 2026</p>
+        <p class="font-serif text-2xl mb-2 text-stone-300 tracking-wider">Sofía & Mateo</p>
+        <p class="text-[9px] tracking-[0.3em] uppercase opacity-50">Octubre 2025</p>
     </footer>
 
+    <!-- JS -->
     <script>
         lucide.createIcons();
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.15 });
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-        const targetDate = new Date('2026-12-12T18:00:00').getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = targetDate - now;
-            if(diff > 0) {
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((diff % (1000 * 60)) / 1000);
-                document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-                document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-                document.getElementById('minutes').innerText = m < 10 ? '0'+m : m;
-                document.getElementById('seconds').innerText = s < 10 ? '0'+s : s;
-            }
-        }, 1000);
-
-        let slideIndex = 0;
-        const slides = document.querySelectorAll('.slide');
-        function changeSlide(n) {
-            slides[slideIndex].classList.remove('active');
-            slideIndex = (slideIndex + n + slides.length) % slides.length;
-            slides[slideIndex].classList.add('active');
+        function selectMenu(menuValue, element) {
+            document.getElementById('menu-input').value = menuValue;
+            document.querySelectorAll('.menu-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('menu-error').classList.add('hidden');
         }
-        setInterval(() => changeSlide(1), 5000);
+
+        const FECHA_BODA = new Date(2025, 9, 18, 16, 0, 0).getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = FECHA_BODA - now;
+            
+            const timeData = [
+                { val: Math.floor(diff / (1000 * 60 * 60 * 24)), label: 'Días' },
+                { val: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)), label: 'Horas' },
+                { val: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)), label: 'Min' },
+                { val: Math.floor((diff % (1000 * 60)) / 1000), label: 'Seg' }
+            ];
+
+            const container = document.getElementById('countdown');
+            container.innerHTML = diff > 0 ? timeData.map(t => `
+                <div class="bg-stone-50 p-2 md:p-4 w-full rounded-lg border border-stone-100 flex flex-col items-center justify-center shadow-sm">
+                    <span class="text-xl md:text-4xl font-serif text-stone-800 font-bold leading-none">${String(t.val).padStart(2,'0')}</span>
+                    <span class="text-[7px] md:text-[9px] font-bold text-stone-400 tracking-widest uppercase mt-1 md:mt-2">${t.label}</span>
+                </div>
+            `).join('') : '<div class="w-full text-2xl font-serif text-rose-900 text-center">¡Es hoy!</div>';
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        const images = [
+            "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800"
+        ];
+        let currentIdx = 0;
+        const slider = document.getElementById('slider');
+
+        function renderSlide() {
+            slider.innerHTML = `
+                <div class="w-full h-full bg-cover bg-center transition-all duration-1000 ease-in-out transform scale-105" 
+                     style="background-image: url('${images[currentIdx]}');">
+                     <div class="absolute inset-0 bg-stone-900/10"></div>
+                </div>
+            `;
+        }
+        function nextSlide() { currentIdx = (currentIdx + 1) % images.length; renderSlide(); }
+        function prevSlide() { currentIdx = (currentIdx === 0) ? images.length - 1 : currentIdx - 1; renderSlide(); }
+        
+        renderSlide();
+        setInterval(nextSlide, 5000);
+
+        const calendarGrid = document.getElementById('calendar-grid');
+        let calHTML = '<span></span><span></span>';
+        for(let i=1; i<=31; i++) {
+            let style = i === 18 ? 'bg-amber-700 text-white rounded-full shadow-md font-bold' : 'text-stone-400 hover:text-stone-800';
+            calHTML += `<div class="calendar-day ${style}">${i}</div>`;
+        }
+        calendarGrid.innerHTML = calHTML;
+
+        const rsvpForm = document.getElementById('rsvp-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const statusMsg = document.getElementById('rsvp-status');
+        const menuInput = document.getElementById('menu-input');
+        const menuError = document.getElementById('menu-error');
+        const successSection = document.getElementById('success-msg');
+
+        // URL proporcionada por el usuario
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzkBX1GZASS5E9_sozTi547KgE2lqtJiu1FYjNxmCchTmBqWxsYsSENvEFMsWBALAeK/exec";
+
+        rsvpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!menuInput.value) {
+                menuError.classList.remove('hidden');
+                return;
+            }
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="loader"></span>';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(rsvpForm);
+            try {
+                const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+                if (response) {
+                    rsvpForm.classList.add('hidden');
+                    successSection.classList.remove('hidden');
+                    successSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    rsvpForm.reset();
+                }
+            } catch (error) {
+                statusMsg.textContent = "Error de conexión.";
+                statusMsg.classList.remove('hidden');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
     </script>
 </body>
 </html>
