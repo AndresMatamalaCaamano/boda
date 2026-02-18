@@ -3,458 +3,601 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boda de Sofía & Mateo - Exclusive Edition</title>
+    <title>Nuestra Boda</title>
+    <meta name="description" content="Invitación de Boda de Marta y Javier">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Fuentes High-End -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@100;300;400;500&display=swap" rel="stylesheet">
+    <!-- Fuentes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Iconos -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Configuración Tailwind & Estilos Personalizados -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            DEFAULT: '#C5A059',
+                            light: '#E5C98D',
+                            dark: '#9A7B3F',
+                            dim: 'rgba(197, 160, 89, 0.1)',
+                            rich: '#B8860B' 
+                        },
+                        cream: '#F9F7F2',
+                        stone: '#1C1917',
+                        paper: '#FFFCF5'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        script: ['"Great Vibes"', 'cursive'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft-float': '0 20px 60px -10px rgba(197, 160, 89, 0.15), 0 10px 30px -10px rgba(0, 0, 0, 0.05)',
+                        'card-depth': '0 20px 40px -5px rgba(28, 25, 23, 0.1), 0 10px 20px -5px rgba(28, 25, 23, 0.04)',
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-        :root {
-            --champagne: #f7e7ce;
-            --soft-gold: #c5a059;
-            --dark-velvet: #0a0a0b;
-        }
-
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background-color: var(--dark-velvet);
-            color: #e2e8f0;
-            scroll-behavior: smooth;
+        /* --- Textura de Papel --- */
+        body {
+            background-color: #F9F7F2;
+            color: #1C1917;
+            overflow-x: hidden;
         }
         
-        h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
-        .font-cinzel { font-family: 'Cinzel', serif; }
-        
-        /* Glassmorphism Pro */
-        .glass-premium {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            opacity: 0.6;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        /* Menu Selection Ultra */
-        .menu-card {
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-        }
-        
-        .menu-card img {
-            transition: transform 1.2s ease;
-        }
+        /* --- Tipografía --- */
+        .text-shadow-sm { text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+        .text-shadow-lg { text-shadow: 2px 2px 15px rgba(0,0,0,0.5); }
 
-        .menu-card:hover img {
-            transform: scale(1.08);
-        }
-
-        .menu-card.selected {
-            border-color: var(--soft-gold);
-            transform: translateY(-8px);
-            box-shadow: 0 0 30px rgba(197, 160, 89, 0.2);
-        }
-
-        .menu-check {
-            display: none;
-            background: linear-gradient(135deg, var(--soft-gold), var(--champagne));
-        }
-
-        .menu-card.selected .menu-check {
-            display: flex;
-        }
-
-        /* Hero Glow Animation */
-        .hero-glow {
+        /* --- Decoraciones de Acuarela (CSS Pure) --- */
+        .watercolor-blob {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60vw;
-            height: 60vh;
-            background: radial-gradient(circle, rgba(197, 160, 89, 0.08) 0%, transparent 70%);
-            z-index: 1;
+            background: radial-gradient(circle at center, rgba(197, 160, 89, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(40px);
+            z-index: 0;
+            pointer-events: none;
         }
 
-        /* Button Shine Effect */
-        .btn-shine {
+        /* --- Glassmorphism --- */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 32px 0 rgba(197, 160, 89, 0.1);
+        }
+
+        /* --- Hero Parallax --- */
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)),
+                              url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+
+        /* --- Animaciones --- */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow { animation: rotate-slow 30s linear infinite; }
+
+        /* --- Botón Premium --- */
+        .btn-gold {
             position: relative;
             overflow: hidden;
+            transition: all 0.4s ease;
+            background: linear-gradient(135deg, #C5A059 0%, #D4B675 100%);
         }
-        .btn-shine::after {
-            content: "";
+        .btn-gold::after {
+            content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                rgba(255,255,255,0) 0%,
-                rgba(255,255,255,0) 40%,
-                rgba(255,255,255,0.4) 50%,
-                rgba(255,255,255,0) 60%,
-                rgba(255,255,255,0) 100%
-            );
-            transform: rotate(45deg);
-            transition: all 0.3s;
-            animation: shine 4s infinite;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
         }
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            20% { transform: translateX(100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
+        .btn-gold:hover::after { left: 100%; }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3); }
+
+        /* --- Calendario Mejorado --- */
+        .calendar-arch {
+            border-radius: 50% 50% 0 0 / 20% 20% 0 0; /* Arco más suave */
+        }
+        
+        .calendar-day {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #57534e;
+            margin: auto;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-active {
+            background: linear-gradient(135deg, #C5A059, #B8860B);
+            color: white;
+            border-radius: 50%;
+            box-shadow: 0 8px 16px rgba(184, 134, 11, 0.4);
+            position: relative;
+            font-weight: bold;
+            transform: scale(1.1);
+        }
+        .calendar-active::after {
+            content: '♥';
+            position: absolute;
+            top: -14px;
+            font-size: 16px;
+            color: #B8860B;
+            animation: float 2s ease-in-out infinite;
         }
 
-        .fade-up { animation: fadeUp 1.2s ease-out forwards; opacity: 0; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- Música --- */
+        .music-disc {
+            animation: rotate-slow 4s linear infinite;
+            animation-play-state: paused;
+        }
+        .playing .music-disc { animation-play-state: running; }
 
-        /* Carrusel Border Gradient */
-        .border-gradient {
-            padding: 1px;
-            background: linear-gradient(to bottom right, rgba(197, 160, 89, 0.5), transparent, rgba(197, 160, 89, 0.5));
+        /* --- Pétalos --- */
+        .petal {
+            position: fixed;
+            top: -10vh;
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(720deg); }
+        }
+        
+        /* --- Arch Card Border --- */
+        .arch-card {
+            border-radius: 200px 200px 30px 30px;
+            border: 1px solid #E5E5E5;
+            position: relative;
+        }
+        
+        .arch-border-gold {
+            position: absolute;
+            inset: 8px;
+            border: 2px solid #C5A059;
+            border-radius: 190px 190px 24px 24px;
+            pointer-events: none;
+            opacity: 0.6;
         }
     </style>
 </head>
-<body class="overflow-x-hidden">
+<body class="antialiased selection:bg-gold selection:text-white">
 
-    <!-- HERO SECTION: THE MASTERPIECE -->
-    <header class="relative h-screen flex items-center justify-center text-center px-4 overflow-hidden">
-        <div class="hero-glow"></div>
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1600&auto=format&fit=crop" class="w-full h-full object-cover" alt="Boda de Lujo">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black"></div>
+    <!-- Audio Player -->
+    <audio id="weddingMusic" loop>
+        <source src="Indila - Love Story but its only the magical part (looped & slowed).mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="musicControl" onclick="toggleMusic()" class="fixed bottom-6 right-6 z-50 cursor-pointer group transition-all duration-300 transform hover:scale-110">
+        <div class="relative w-12 h-12 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gold/30">
+            <svg id="musicIcon" class="w-6 h-6 text-gold music-disc transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 12 L12 2"></path>
+            </svg>
+            <div class="absolute inset-0 rounded-full border border-gold opacity-0 group-hover:opacity-100 animate-ping"></div>
         </div>
+    </div>
 
-        <div class="relative z-10 fade-up">
-            <div class="mb-8 inline-block">
-                <p class="font-cinzel text-[10px] md:text-xs tracking-[0.8em] uppercase text-amber-200/60 mb-2">Una Historia Eterna</p>
-                <div class="h-px w-24 bg-gradient-to-r from-transparent via-amber-200/50 to-transparent mx-auto"></div>
-            </div>
+    <!-- HERO SECTION -->
+    <section class="relative h-screen w-full overflow-hidden hero-bg flex flex-col justify-center items-center text-center px-4">
+        
+        <div class="absolute inset-4 md:inset-8 border border-white/30 z-10 pointer-events-none"></div>
+        <div class="absolute inset-6 md:inset-10 border border-white/10 z-10 pointer-events-none"></div>
+
+        <div class="relative z-20 text-white" data-aos="fade-up" data-aos-duration="1500">
+            <p class="font-sans text-sm md:text-base tracking-[0.4em] uppercase mb-6 opacity-90">Nos casamos</p>
             
-            <h1 class="text-7xl md:text-[10rem] font-serif mb-6 text-white italic leading-tight">
-                Sofía <span class="text-amber-100/30 font-light not-italic font-cinzel text-5xl md:text-8xl">&</span> Mateo
+            <h1 class="font-serif text-7xl md:text-9xl lg:text-[10rem] mb-4 text-shadow-lg leading-none">
+                anonimo <span class="font-script text-gold-light mx-2 md:mx-4">&</span> anonimo
             </h1>
             
-            <div class="space-y-4">
-                <p class="text-xl md:text-3xl font-light tracking-[0.4em] text-amber-100/80">SÁBADO 18 OCTUBRE</p>
-                <p class="text-sm font-light tracking-[0.2em] text-white/40">DOS MIL VEINTICINCO</p>
-            </div>
-            
-            <div class="mt-16">
-                <a href="#rsvp" class="btn-shine bg-amber-200/10 hover:bg-amber-200/20 text-white border border-amber-200/30 px-12 py-4 rounded-full text-[10px] tracking-[0.4em] transition-all duration-700 backdrop-blur-md uppercase font-bold">
-                    Confirmar Invitación
-                </a>
+            <div class="flex items-center justify-center gap-4 mt-10 opacity-90 font-sans text-base md:text-lg tracking-widest uppercase">
+                <span class="border-b border-white/50 pb-1">10 de Marzo</span>
+                <span class="text-gold-light">•</span>
+                <span class="border-b border-white/50 pb-1">Chillan</span>
+                <span class="text-gold-light">•</span>
+                <span class="border-b border-white/50 pb-1">2026</span>
             </div>
         </div>
 
-        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 opacity-30">
-            <div class="w-px h-16 bg-gradient-to-b from-amber-200 to-transparent mx-auto"></div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce text-white/70">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
         </div>
-    </header>
 
-    <!-- CUENTA REGRESIVA Y CARRUSEL -->
-    <section class="py-32 px-4 relative">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
-            
-            <!-- Carrusel con Borde Minimalista -->
-            <div class="relative border-gradient rounded-[3rem] overflow-hidden shadow-2xl">
-                <div class="relative h-[450px] md:h-[650px] rounded-[3rem] overflow-hidden bg-zinc-900">
-                    <div id="slider" class="h-full w-full">
-                        <!-- JS -->
-                    </div>
-                    <!-- Controles Minimalistas -->
-                    <div class="absolute bottom-10 left-10 flex gap-4 z-20">
-                        <button onclick="prevSlide()" class="w-12 h-12 glass-premium rounded-full text-amber-200 hover:bg-amber-200 hover:text-black transition-all flex items-center justify-center">
-                            <i data-lucide="arrow-left" size="18"></i>
-                        </button>
-                        <button onclick="nextSlide()" class="w-12 h-12 glass-premium rounded-full text-amber-200 hover:bg-amber-200 hover:text-black transition-all flex items-center justify-center">
-                            <i data-lucide="arrow-right" size="18"></i>
-                        </button>
-                    </div>
-                </div>
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-10">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[60px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V120H0Z" fill="#F9F7F2"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- NUESTRA HISTORIA -->
+    <section class="py-24 md:py-36 relative overflow-hidden">
+        <div class="watercolor-blob w-96 h-96 top-0 left-[-100px]"></div>
+        <div class="watercolor-blob w-64 h-64 bottom-0 right-[-50px]" style="background: radial-gradient(circle at center, rgba(160, 197, 89, 0.1) 0%, transparent 70%);"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-20" data-aos="fade-up">
+                <span class="text-gold font-sans text-sm tracking-[0.3em] uppercase block mb-4">Love Story</span>
+                <h2 class="font-serif text-5xl md:text-6xl text-stone italic mb-8">Nuestra Historia</h2>
+                <div class="w-32 h-[1px] bg-gold mx-auto mb-8"></div>
+                <p class="font-sans font-light text-xl text-gray-600 leading-relaxed">
+                    "El amor no se trata de cuántos días, meses o años hemos estado juntos. 
+                    Se trata de lo mucho que nos amamos cada día."
+                </p>
             </div>
 
-            <!-- Countdown y Narrativa -->
-            <div class="space-y-12">
-                <div class="space-y-4">
-                    <h2 class="text-6xl md:text-8xl font-serif text-white leading-none italic">El amor <br><span class="text-amber-200">no tiene fin.</span></h2>
-                    <p class="text-slate-400 text-lg font-light leading-relaxed max-w-xl">
-                        Acompañanos a celebrar el inicio de nuestro para siempre. Un día diseñado para compartir, brindar y bailar bajo las estrellas.
-                    </p>
+            <div class="relative max-w-5xl mx-auto" data-aos="zoom-in" data-aos-delay="200">
+                <div class="carousel-container relative h-[550px] md:h-[700px] w-full">
+                    
+                    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-100 flex items-center justify-center">
+                        <div class="bg-white p-5 md:p-8 shadow-2xl transform rotate-[-2deg] max-w-lg w-full">
+                            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=80" class="w-full h-[400px] md:h-[550px] object-cover filter sepia-[0.2]" alt="Pareja">
+                            <div class="pt-8 pb-3 text-center font-script text-4xl text-gray-400">El comienzo</div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0 flex items-center justify-center">
+                        <div class="bg-white p-5 md:p-8 shadow-2xl transform rotate-[2deg] max-w-lg w-full">
+                            <img src="https://images.unsplash.com/photo-1621621667797-e06afc217fb0?auto=format&fit=crop&w=1000&q=80" class="w-full h-[400px] md:h-[550px] object-cover filter sepia-[0.2]" alt="Pareja">
+                            <div class="pt-8 pb-3 text-center font-script text-4xl text-gray-400">Nuestros viajes</div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0 flex items-center justify-center">
+                        <div class="bg-white p-5 md:p-8 shadow-2xl transform rotate-[-1deg] max-w-lg w-full">
+                            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1000&q=80" class="w-full h-[400px] md:h-[550px] object-cover filter sepia-[0.2]" alt="Pareja">
+                            <div class="pt-8 pb-3 text-center font-script text-4xl text-gray-400">El "Sí, quiero"</div>
+                        </div>
+                    </div>
+
                 </div>
                 
-                <div id="countdown" class="grid grid-cols-2 sm:grid-cols-4 gap-6">
-                    <!-- JS -->
+                <div class="flex justify-center mt-10 space-x-4">
+                    <button onclick="setSlide(0)" class="dot w-4 h-4 rounded-full border border-gold bg-gold transition-all"></button>
+                    <button onclick="setSlide(1)" class="dot w-4 h-4 rounded-full border border-gold bg-transparent transition-all"></button>
+                    <button onclick="setSlide(2)" class="dot w-4 h-4 rounded-full border border-gold bg-transparent transition-all"></button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- LUGARES E ITINERARIO: GRID ESTILIZADO -->
-    <section class="py-32 bg-zinc-950/50 relative">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-24">
-                <p class="font-cinzel text-amber-200/40 text-xs tracking-[0.5em] mb-4">LOGÍSTICA</p>
-                <h2 class="text-5xl md:text-6xl font-serif text-white">El Itinerario</h2>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-12">
-                <!-- Ceremonia -->
-                <div class="group relative bg-zinc-900/40 rounded-[2.5rem] p-10 border border-white/5 hover:border-amber-200/20 transition-all duration-700 overflow-hidden">
-                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-amber-200/5 rounded-full blur-3xl group-hover:bg-amber-200/10 transition-colors"></div>
-                    
-                    <div class="relative z-10">
-                        <div class="mb-10 text-amber-200/60"><i data-lucide="church" size="40" stroke-width="1"></i></div>
-                        <h3 class="text-4xl font-serif text-white mb-2">Ceremonia</h3>
-                        <p class="text-amber-200/80 font-cinzel text-xs tracking-widest mb-6">16:00 · CATEDRAL DE SANTA MARÍA</p>
-                        <p class="text-slate-500 font-light mb-8 max-w-sm">Una ceremonia solemne donde uniremos nuestras vidas ante nuestros seres queridos.</p>
-                        <a href="#" class="inline-flex items-center gap-3 text-white text-[10px] tracking-widest font-bold uppercase group-hover:gap-5 transition-all">Ver Ubicación <i data-lucide="arrow-right" size="14" class="text-amber-200"></i></a>
-                    </div>
-                </div>
-
-                <!-- Recepción -->
-                <div class="group relative bg-zinc-900/40 rounded-[2.5rem] p-10 border border-white/5 hover:border-amber-200/20 transition-all duration-700 overflow-hidden">
-                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-amber-200/5 rounded-full blur-3xl group-hover:bg-amber-200/10 transition-colors"></div>
-                    
-                    <div class="relative z-10">
-                        <div class="mb-10 text-amber-200/60"><i data-lucide="glass-water" size="40" stroke-width="1"></i></div>
-                        <h3 class="text-4xl font-serif text-white mb-2">Recepción</h3>
-                        <p class="text-amber-200/80 font-cinzel text-xs tracking-widest mb-6">19:00 · HACIENDA LOS OLIVOS</p>
-                        <p class="text-slate-500 font-light mb-8 max-w-sm">Brindis, cena gourmet y una fiesta que durará hasta el amanecer.</p>
-                        <a href="#" class="inline-flex items-center gap-3 text-white text-[10px] tracking-widest font-bold uppercase group-hover:gap-5 transition-all">Ver Ubicación <i data-lucide="arrow-right" size="14" class="text-amber-200"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CALENDARIO VISUAL DESIGNER -->
-    <section class="py-32 px-4 flex justify-center">
-        <div class="w-full max-w-lg glass-premium p-12 rounded-[4rem] relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-200/30 to-transparent"></div>
-            <div class="text-center mb-10">
-                <p class="text-amber-200/50 font-cinzel text-[10px] tracking-[0.5em] mb-4">OCTUBRE 2025</p>
-                <h3 class="text-5xl font-serif italic text-white leading-none">Save the Date</h3>
-            </div>
-            <div class="grid grid-cols-7 gap-2 text-center text-[9px] font-bold text-slate-600 mb-6 tracking-widest uppercase">
-                <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
-            </div>
-            <div id="calendar-grid" class="grid grid-cols-7 gap-3 text-center text-sm font-light">
-                <!-- JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- RSVP: EL GRAN FINALE -->
-    <section class="py-32 px-4" id="rsvp">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-20">
-                <h2 class="text-6xl md:text-7xl font-serif text-white mb-6 italic">¿Nos acompañas?</h2>
-                <p class="text-slate-500 font-light tracking-widest">CONFIRMA TU ASISTENCIA ANTES DEL 1 DE SEPTIEMBRE</p>
-            </div>
-
-            <form id="rsvp-form" class="glass-premium rounded-[4rem] p-10 md:p-20 shadow-2xl relative border-white/5">
-                
-                <div class="grid md:grid-cols-2 gap-12 mb-20">
-                    <div class="space-y-4">
-                        <label class="text-[10px] font-bold tracking-[0.4em] uppercase text-amber-200/40 ml-2">Nombre</label>
-                        <input type="text" name="nombre" required class="w-full bg-white/5 border-b border-white/10 py-4 px-2 focus:outline-none focus:border-amber-200 transition-all text-xl font-serif text-white placeholder-slate-800" placeholder="Escribe tu nombre">
-                    </div>
-                    <div class="space-y-4">
-                        <label class="text-[10px] font-bold tracking-[0.4em] uppercase text-amber-200/40 ml-2">Apellido</label>
-                        <input type="text" name="apellido" required class="w-full bg-white/5 border-b border-white/10 py-4 px-2 focus:outline-none focus:border-amber-200 transition-all text-xl font-serif text-white placeholder-slate-800" placeholder="Escribe tu apellido">
-                    </div>
-                </div>
-
-                <!-- Selección de Menú Visual -->
-                <div class="mb-20">
-                    <div class="text-center mb-12">
-                        <span class="text-xs font-bold tracking-[0.4em] uppercase text-amber-100/30">Degustación Menú</span>
-                    </div>
-
-                    <div class="grid sm:grid-cols-3 gap-8">
-                        <!-- Menú 1 -->
-                        <div class="menu-card rounded-[2rem] p-4 text-center border border-white/5 bg-zinc-900/20" onclick="selectMenu('Carne', this)">
-                            <div class="menu-check absolute top-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shadow-xl border border-white/20"><i data-lucide="check" size="18" class="text-white"></i></div>
-                            <div class="h-44 rounded-2xl overflow-hidden mb-6 shadow-2xl">
-                                <img src="https://images.unsplash.com/photo-1546241072-48010ad2862c?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0">
-                            </div>
-                            <h4 class="font-serif text-2xl text-white mb-1">Lomo Fino</h4>
-                            <p class="text-[9px] text-amber-200/40 font-bold uppercase tracking-widest">Salsa Bourguignon</p>
-                        </div>
-                        <!-- Menú 2 -->
-                        <div class="menu-card rounded-[2rem] p-4 text-center border border-white/5 bg-zinc-900/20" onclick="selectMenu('Pollo', this)">
-                            <div class="menu-check absolute top-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shadow-xl border border-white/20"><i data-lucide="check" size="18" class="text-white"></i></div>
-                            <div class="h-44 rounded-2xl overflow-hidden mb-6 shadow-2xl">
-                                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0">
-                            </div>
-                            <h4 class="font-serif text-2xl text-white mb-1">Suprema</h4>
-                            <p class="text-[9px] text-amber-200/40 font-bold uppercase tracking-widest">Crema de Hongos</p>
-                        </div>
-                        <!-- Menú 3 -->
-                        <div class="menu-card rounded-[2rem] p-4 text-center border border-white/5 bg-zinc-900/20" onclick="selectMenu('Vegetariano', this)">
-                            <div class="menu-check absolute top-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shadow-xl border border-white/20"><i data-lucide="check" size="18" class="text-white"></i></div>
-                            <div class="h-44 rounded-2xl overflow-hidden mb-6 shadow-2xl">
-                                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0">
-                            </div>
-                            <h4 class="font-serif text-2xl text-white mb-1">Risotto</h4>
-                            <p class="text-[9px] text-amber-200/40 font-bold uppercase tracking-widest">Pesto & Calabaza</p>
-                        </div>
-                    </div>
-                    
-                    <input type="hidden" id="menu-input" name="menu" required>
-                    <p id="menu-error" class="hidden text-center text-amber-200 text-[10px] mt-10 tracking-[0.3em] font-bold">⚠️ SELECCIONA TU MENÚ PARA CONTINUAR</p>
-                </div>
-
-                <div class="text-center pt-10">
-                    <button type="submit" id="submit-btn" class="btn-shine bg-gradient-to-r from-amber-200/10 to-amber-200/5 hover:from-amber-200 hover:to-amber-100 hover:text-black text-white w-full md:w-auto md:px-24 py-6 rounded-[2rem] font-bold tracking-[0.5em] transition-all duration-700 shadow-2xl uppercase text-xs">
-                        Confirmar Asistencia
-                    </button>
-                    <p id="rsvp-status" class="mt-6 text-xs text-amber-200/60 hidden"></p>
-                </div>
-            </form>
-
-            <!-- Éxito -->
-            <div id="success-msg" class="hidden glass-premium p-20 md:p-32 rounded-[5rem] text-center shadow-2xl border-white/10">
-                <div class="w-32 h-32 bg-amber-200/10 text-amber-200 rounded-full flex items-center justify-center mx-auto mb-10 shadow-inner">
-                    <i data-lucide="flower-2" size="56" stroke-width="1"></i>
-                </div>
-                <h3 class="text-5xl md:text-7xl font-serif text-white mb-6 italic">¡Gracias!</h3>
-                <p class="text-slate-400 text-xl font-light">Será un honor compartir nuestro gran día contigo.</p>
-                <div class="mt-20 flex justify-center gap-2 opacity-20">
-                    <div class="w-1.5 h-1.5 rounded-full bg-amber-200"></div>
-                    <div class="w-1.5 h-1.5 rounded-full bg-amber-200"></div>
-                    <div class="w-1.5 h-1.5 rounded-full bg-amber-200"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-24 text-center border-t border-white/5 bg-black">
-        <p class="font-cinzel text-xs tracking-[1em] text-amber-200/20 mb-6 uppercase">Save the Date</p>
-        <p class="font-serif italic text-4xl text-white mb-4">Sofía & Mateo</p>
-        <p class="text-[10px] tracking-[0.6em] text-slate-700 uppercase">18 · 10 · 2025</p>
-    </footer>
-
-    <!-- JAVASCRIPT: Nombres de funciones intactos -->
-    <script>
-        lucide.createIcons();
-
-        // 1. Menú
-        function selectMenu(menuValue, element) {
-            document.getElementById('menu-input').value = menuValue;
-            document.querySelectorAll('.menu-card').forEach(card => card.classList.remove('selected'));
-            element.classList.add('selected');
-            document.getElementById('menu-error').classList.add('hidden');
-        }
-
-        // 2. Countdown
-        const FECHA_BODA = new Date(2025, 9, 18, 16, 0, 0).getTime();
-
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const diff = FECHA_BODA - now;
-            
-            const timeData = [
-                { val: Math.floor(diff / (1000 * 60 * 60 * 24)), label: 'Días' },
-                { val: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)), label: 'Hr' },
-                { val: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)), label: 'Min' },
-                { val: Math.floor((diff % (1000 * 60)) / 1000), label: 'Seg' }
-            ];
-
-            const container = document.getElementById('countdown');
-            container.innerHTML = diff > 0 ? timeData.map(t => `
-                <div class="glass-premium p-6 rounded-[2rem] flex flex-col items-center justify-center border-white/5">
-                    <span class="text-4xl md:text-5xl font-serif text-white font-bold leading-none">${String(t.val).padStart(2,'0')}</span>
-                    <span class="text-[8px] font-bold text-slate-600 tracking-[0.3em] uppercase mt-3">${t.label}</span>
-                </div>
-            `).join('') : '<div class="w-full text-3xl font-serif text-amber-200 text-center uppercase tracking-widest">Hoy empezamos nuestro para siempre</div>';
-        }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
-        // 3. Slider
-        const images = [
-            "https://images.unsplash.com/photo-1511285560982-1351cdeb9821?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800"
-        ];
-        let currentIdx = 0;
-        const slider = document.getElementById('slider');
-
-        function renderSlide() {
-            slider.innerHTML = `
-                <div class="w-full h-full bg-cover bg-center transition-all duration-[2s] ease-in-out transform scale-110" 
-                     style="background-image: url('${images[currentIdx]}');">
-                </div>
-            `;
-            setTimeout(() => {
-                 slider.querySelector('div').classList.remove('scale-110');
-                 slider.querySelector('div').classList.add('scale-100');
-            }, 50);
-        }
-        function nextSlide() { currentIdx = (currentIdx + 1) % images.length; renderSlide(); }
-        function prevSlide() { currentIdx = (currentIdx === 0) ? images.length - 1 : currentIdx - 1; renderSlide(); }
+    <!-- FECHA Y CUENTA ATRÁS -->
+    <section class="py-24 relative flex items-center justify-center overflow-hidden">
+        <!-- Fondo Decorativo Sutil -->
+        <div class="absolute inset-0 bg-[#f7f5ef]"></div>
+        <div class="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         
-        renderSlide();
-        setInterval(nextSlide, 7000);
+        <!-- Elementos Florales Flotantes -->
+        <div class="absolute top-10 left-10 text-gold-light opacity-50 animate-float text-4xl transform rotate-12">🌿</div>
+        <div class="absolute bottom-20 right-20 text-gold-light opacity-50 animate-float text-5xl transform -rotate-12" style="animation-delay: 2s;">🌸</div>
 
-        // 4. Calendario
-        const calendarGrid = document.getElementById('calendar-grid');
-        let calHTML = '<span></span><span></span>'; 
-        for(let i=1; i<=31; i++) {
-            let style = i === 18 
-                ? 'bg-amber-200 text-black rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)] font-bold scale-125' 
-                : 'text-slate-600 hover:text-white transition-all';
-            
-            calHTML += `<div class="aspect-square flex items-center justify-center rounded-full ${style}">${i}</div>`;
-        }
-        calendarGrid.innerHTML = calHTML;
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="grid md:grid-cols-2 gap-16 md:gap-32 items-center">
+                
+                <!-- Countdown: Esfera Minimalista -->
+                <div class="order-2 md:order-1 flex justify-center" data-aos="fade-right">
+                    <div class="relative w-[340px] h-[340px] md:w-[450px] md:h-[450px] flex items-center justify-center">
+                        
+                        <!-- Panel Blanco Puro Circular -->
+                        <div class="rounded-full w-full h-full flex flex-col items-center justify-center p-8 relative z-10 bg-white shadow-soft-float border border-white">
+                            
+                            <!-- Flor decorativa sutil -->
+                            <div class="text-2xl mb-2 opacity-80">🌸</div>
+                            
+                            <span class="font-script text-5xl md:text-6xl text-gold-dark mb-10 text-shadow-sm">Faltan</span>
+                            
+                            <!-- Grid limpio sin bordes extra -->
+                            <div class="flex justify-center items-start gap-6 md:gap-10 w-full px-4">
+                                <!-- Días -->
+                                <div class="flex flex-col items-center">
+                                    <span id="days" class="text-5xl md:text-6xl font-serif font-bold text-stone leading-none mb-3">0</span>
+                                    <div class="h-[1px] w-6 bg-gold/30 mb-2"></div>
+                                    <small class="text-[10px] tracking-[0.2em] uppercase text-gray-400 font-sans font-semibold">Días</small>
+                                </div>
+                                <!-- Horas -->
+                                <div class="flex flex-col items-center">
+                                    <span id="hours" class="text-5xl md:text-6xl font-serif font-bold text-stone leading-none mb-3">0</span>
+                                    <div class="h-[1px] w-6 bg-gold/30 mb-2"></div>
+                                    <small class="text-[10px] tracking-[0.2em] uppercase text-gray-400 font-sans font-semibold">Hs</small>
+                                </div>
+                                <!-- Minutos -->
+                                <div class="flex flex-col items-center">
+                                    <span id="mins" class="text-5xl md:text-6xl font-serif font-bold text-stone leading-none mb-3">0</span>
+                                    <div class="h-[1px] w-6 bg-gold/30 mb-2"></div>
+                                    <small class="text-[10px] tracking-[0.2em] uppercase text-gray-400 font-sans font-semibold">Min</small>
+                                </div>
+                                <!-- Segundos -->
+                                <div class="flex flex-col items-center">
+                                    <span id="secs" class="text-5xl md:text-6xl font-serif font-bold text-gold leading-none mb-3">0</span>
+                                    <div class="h-[1px] w-6 bg-gold/30 mb-2"></div>
+                                    <small class="text-[10px] tracking-[0.2em] uppercase text-gray-400 font-sans font-semibold">Seg</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        // 5. RSVP
-        const rsvpForm = document.getElementById('rsvp-form');
-        const submitBtn = document.getElementById('submit-btn');
-        const statusMsg = document.getElementById('rsvp-status');
-        const menuInput = document.getElementById('menu-input');
-        const menuError = document.getElementById('menu-error');
-        const successSection = document.getElementById('success-msg');
+                <!-- Calendario: Estilo Arco -->
+                <div class="order-1 md:order-2 flex justify-center" data-aos="fade-left">
+                    <div class="arch-card bg-white w-full max-w-[400px] shadow-card-depth p-10 md:p-12 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-500">
+                        
+                        <!-- Borde Dorado Interno -->
+                        <div class="arch-border-gold"></div>
 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzkBX1GZASS5E9_sozTi547KgE2lqtJiu1FYjNxmCchTmBqWxsYsSENvEFMsWBALAeK/exec";
+                        <!-- Decoración Floral Pequeña -->
+                        <div class="absolute top-12 left-10 text-gold-light opacity-80 text-xl transform rotate-45">🌿</div>
 
-        rsvpForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!menuInput.value) {
-                menuError.classList.remove('hidden');
-                menuError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
+                        <div class="text-center relative z-10 pt-4">
+                            <h3 class="font-serif text-5xl text-stone mb-1">Marzo</h3>
+                            <p class="text-gold-rich font-sans text-xs tracking-[0.6em] font-semibold uppercase mb-8">2026</p>
+                            
+                            <!-- Días de la semana -->
+                            <div class="grid grid-cols-7 gap-y-6 font-sans text-xs md:text-sm mb-6 border-b border-gray-100 pb-6 mx-2">
+                                <div class="text-gold-rich font-bold">L</div>
+                                <div class="text-gray-400">M</div>
+                                <div class="text-gray-400">M</div>
+                                <div class="text-gray-400">J</div>
+                                <div class="text-gray-400">V</div>
+                                <div class="text-gray-400">S</div>
+                                <div class="text-gray-400">D</div>
+                            </div>
+                            
+                            <!-- Grid de Números -->
+                            <div class="grid grid-cols-7 gap-y-2 font-serif mx-2 relative">
+                                <!-- Decoración floral en el día 3 -->
+                                <div class="absolute top-0 left-[2%] text-pink-300 opacity-60 text-lg">🌸</div>
 
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></span>';
-            submitBtn.disabled = true;
+                                <!-- Dummies -->
+                                <div></div><div></div><div></div><div></div><div></div>
+                                <div class="calendar-day text-gray-400 text-sm">1</div>
+                                <div class="calendar-day text-gray-400 text-sm">2</div>
+                                
+                                <div class="calendar-day">3</div><div class="calendar-day">4</div><div class="calendar-day">5</div><div class="calendar-day">6</div><div class="calendar-day">7</div><div class="calendar-day">8</div><div class="calendar-day">9</div>
+                                
+                                <!-- El Gran Día (10) -->
+                                <div class="flex justify-center items-center">
+                                    <span class="calendar-day calendar-active shadow-lg">10</span>
+                                </div>
+                                
+                                <div class="calendar-day">11</div><div class="calendar-day">12</div><div class="calendar-day">13</div><div class="calendar-day">14</div><div class="calendar-day">15</div><div class="calendar-day">16</div>
+                                <div class="calendar-day">17</div><div class="calendar-day">18</div><div class="calendar-day">19</div><div class="calendar-day">20</div><div class="calendar-day">21</div><div class="calendar-day">22</div><div class="calendar-day">23</div>
+                            </div>
 
-            const formData = new FormData(rsvpForm);
-            try {
-                const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
-                if (response) {
-                    rsvpForm.classList.add('hidden');
-                    successSection.classList.remove('hidden');
-                    successSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    rsvpForm.reset();
-                }
-            } catch (error) {
-                statusMsg.textContent = "Error de conexión. Intenta de nuevo.";
-                statusMsg.classList.remove('hidden');
-            } finally {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
+                            <div class="mt-12 pt-0">
+                                <p class="font-script text-3xl text-stone">Lunes, 18:30 horas</p>
+                            </div>
+                            
+                            <!-- Flor decorativa inferior -->
+                            <div class="absolute -bottom-2 right-10 text-pink-300 opacity-60 text-2xl transform rotate-12">🌺</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- DETALLES (Tarjetas Glassmorphism) -->
+    <section class="py-24 relative">
+        <div class="watercolor-blob w-[600px] h-[600px] top-20 right-0 opacity-40"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="font-serif text-5xl md:text-6xl text-stone">Detalles del Evento</h2>
+                <div class="flex justify-center mt-4">
+                    <svg class="w-10 h-10 text-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10 lg:gap-20 max-w-6xl mx-auto">
+                
+                <!-- Ceremonia -->
+                <div class="glass-panel p-12 rounded-[2.5rem] text-center group hover:shadow-2xl transition-all duration-500" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-24 h-24 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:bg-gold group-hover:text-white transition-colors duration-500">
+                        <svg class="w-12 h-12 text-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
+                    </div>
+                    <h3 class="font-serif text-3xl font-bold text-stone mb-3">Ceremonia Religiosa</h3>
+                    <p class="font-script text-2xl text-gold mb-6">Catedral de la Almudena</p>
+                    <p class="font-sans text-base text-gray-500 mb-10 leading-relaxed px-4">
+                        Calle, 10, Chillan<br>
+                        Acompáñanos en el momento más sagrado de nuestra unión.
+                    </p>
+                    <a href="#" class="inline-block px-10 py-4 border border-stone text-stone text-sm font-bold tracking-widest uppercase hover:bg-stone hover:text-white transition-colors">
+                        Ver Mapa
+                    </a>
+                </div>
+
+                <!-- Celebración -->
+                <div class="glass-panel p-12 rounded-[2.5rem] text-center group hover:shadow-2xl transition-all duration-500" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-24 h-24 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-8 group-hover:bg-gold group-hover:text-white transition-colors duration-500">
+                        <svg class="w-12 h-12 text-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path></svg>
+                    </div>
+                    <h3 class="font-serif text-3xl font-bold text-stone mb-3">Banquete & Fiesta</h3>
+                    <p class="font-script text-2xl text-gold mb-6">Finca Los Olivos</p>
+                    <p class="font-sans text-base text-gray-500 mb-10 leading-relaxed px-4">
+                        Calle, 10, Chillan<br>
+                        Después de la ceremonia, celebraremos con cena, música y baile.
+                    </p>
+                    <a href="#" class="inline-block px-10 py-4 border border-stone text-stone text-sm font-bold tracking-widest uppercase hover:bg-stone hover:text-white transition-colors">
+                        Ver Mapa
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP FOOTER -->
+    <section class="relative py-32 bg-stone text-white overflow-hidden flex flex-col items-center justify-center text-center">
+        <!-- Imagen de fondo con overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1522673607200-1645062cd958?auto=format&fit=crop&w=1920&q=80" class="w-full h-full object-cover opacity-20">
+            <div class="absolute inset-0 bg-gradient-to-t from-stone to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 container px-6" data-aos="zoom-in">
+            <h2 class="font-script text-6xl md:text-8xl mb-8 text-gold-light">¿Nos acompañas?</h2>
+            <p class="font-sans font-light text-gray-300 max-w-2xl mx-auto mb-12 text-xl md:text-2xl leading-relaxed">
+                Tu presencia es el mejor regalo que podemos recibir. 
+                Por favor, confirma tu asistencia antes del 1 de Marzo.
+            </p>
+
+            <a href="https://docs.google.com/forms" target="_blank" class="btn-gold text-white font-sans text-lg font-bold py-5 px-16 rounded-full tracking-[0.2em] uppercase shadow-lg inline-block transform transition-transform hover:scale-105">
+                Confirmar Asistencia
+            </a>
+
+            <div class="mt-24 border-t border-white/10 pt-10 w-full max-w-md mx-auto">
+                <p class="font-serif text-3xl tracking-widest text-white/50">A & A</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializar animaciones
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'ease-out-cubic'
         });
+
+        // Lógica del Carrusel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+        const dots = document.querySelectorAll('.dot');
+
+        function setSlide(index) {
+            slides.forEach(slide => slide.style.opacity = '0');
+            dots.forEach(dot => {
+                dot.classList.remove('bg-gold');
+                dot.classList.add('bg-transparent');
+            });
+            
+            slides[index].style.opacity = '1';
+            dots[index].classList.remove('bg-transparent');
+            dots[index].classList.add('bg-gold');
+            currentSlide = index;
+        }
+
+        // Auto avance del carrusel
+        setInterval(() => {
+            let next = (currentSlide + 1) % slides.length;
+            setSlide(next);
+        }, 5000);
+
+        // Cuenta regresiva
+        // IMPORTANTE: Aseguramos que la fecha sea futura (2027) para evitar números negativos
+        const weddingDate = new Date("March 10, 2026 18:30:00").getTime();
+        
+        setInterval(function() {
+            const now = new Date().getTime();
+            let distance = weddingDate - now;
+
+            // Seguridad: Si la distancia es negativa (por error de fecha), mostramos 0
+            if (distance < 0) distance = 0;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Modificado: Ya NO agregamos el '0' a la izquierda si es menor a 10.
+            // Se muestra tal cual: "5" en lugar de "05".
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("mins").innerText = minutes;
+            document.getElementById("secs").innerText = seconds;
+        }, 1000);
+
+        // Control de Música
+        const audio = document.getElementById('weddingMusic');
+        const btn = document.getElementById('musicControl');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                btn.classList.remove('playing');
+                document.getElementById('musicIcon').style.color = '#C5A059'; // Gold
+            } else {
+                audio.play();
+                btn.classList.add('playing');
+                document.getElementById('musicIcon').style.color = '#1C1917'; // Dark
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Efecto de Pétalos Suaves
+        function createPetal() {
+            if (document.hidden) return; 
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            // Usamos caracteres o imágenes SVG pequeñas
+            const types = ['🌸', '✨', '🍃'];
+            petal.innerText = types[Math.floor(Math.random() * types.length)];
+            
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.fontSize = Math.random() * 10 + 10 + 'px'; // Más pequeños y elegantes
+            petal.style.animationDuration = Math.random() * 5 + 10 + 's'; // Más lentos
+            
+            document.body.appendChild(petal);
+            
+            setTimeout(() => {
+                petal.remove();
+            }, 15000);
+        }
+
+        setInterval(createPetal, 2000);
+
     </script>
 </body>
 </html>
