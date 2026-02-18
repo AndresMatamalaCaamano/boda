@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Boda</title>
+    <title>Marta & Javier | Nuestra Boda</title>
     <meta name="description" content="Invitación de Boda de Marta y Javier">
     
     <!-- Tailwind CSS -->
@@ -44,7 +44,7 @@
                         'card-depth': '0 20px 40px -5px rgba(28, 25, 23, 0.1), 0 10px 20px -5px rgba(28, 25, 23, 0.04)',
                     },
                     screens: {
-                        'xs': '375px', // Breakpoint extra para móviles pequeños
+                        'xs': '375px',
                     }
                 }
             }
@@ -228,13 +228,29 @@
                 border-radius: 190px 190px 24px 24px;
             }
         }
+
+        /* --- Modal --- */
+        .modal {
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+        }
+        .modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-content {
+            transform: scale(0.9);
+            transition: all 0.3s ease-in-out;
+        }
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-gold selection:text-white">
 
-    <!-- 
-        🎵 ZONA DE MÚSICA 🎵 
-    -->
+    <!-- ZONA DE MÚSICA -->
     <audio id="weddingMusic" loop>
         <source src="Indila - Love Story but its only the magical part (looped & slowed).mp3" type="audio/mpeg">
     </audio>
@@ -260,7 +276,7 @@
             <p class="font-sans text-xs sm:text-sm md:text-base tracking-[0.3em] md:tracking-[0.4em] uppercase mb-4 md:mb-6 opacity-90">Nos casamos</p>
             
             <h1 class="font-serif text-5xl sm:text-7xl md:text-9xl lg:text-[10rem] mb-4 text-shadow-lg leading-tight md:leading-none">
-                A <span class="font-script text-gold-light mx-1 md:mx-4 block sm:inline text-4xl sm:text-7xl md:text-[8rem]">&</span> A
+                Marta <span class="font-script text-gold-light mx-1 md:mx-4 block sm:inline text-4xl sm:text-7xl md:text-[8rem]">&</span> Javier
             </h1>
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mt-6 md:mt-10 opacity-90 font-sans text-sm md:text-lg tracking-widest uppercase">
@@ -336,51 +352,36 @@
 
     <!-- FECHA Y CUENTA ATRÁS -->
     <section class="py-16 md:py-24 relative flex items-center justify-center overflow-hidden">
-        <!-- Fondo Decorativo Sutil -->
         <div class="absolute inset-0 bg-[#f7f5ef]"></div>
         <div class="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        
-        <!-- Elementos Florales Flotantes -->
         <div class="absolute top-10 left-4 md:left-10 text-gold-light opacity-50 animate-float text-3xl md:text-4xl transform rotate-12">🌿</div>
         <div class="absolute bottom-20 right-4 md:right-20 text-gold-light opacity-50 animate-float text-4xl md:text-5xl transform -rotate-12" style="animation-delay: 2s;">🌸</div>
 
         <div class="container mx-auto px-6 max-w-7xl relative z-10">
             <div class="grid md:grid-cols-2 gap-12 md:gap-32 items-center">
                 
-                <!-- Countdown: Esfera Minimalista -->
+                <!-- Countdown -->
                 <div class="order-2 md:order-1 flex justify-center" data-aos="fade-right">
-                    <!-- Ajustado w- y h- para móvil: 280px -->
                     <div class="relative w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] md:w-[450px] md:h-[450px] flex items-center justify-center">
-                        
-                        <!-- Panel Blanco Puro Circular -->
                         <div class="rounded-full w-full h-full flex flex-col items-center justify-center p-4 md:p-8 relative z-10 bg-white shadow-soft-float border border-white">
-                            
-                            <!-- Flor decorativa sutil -->
                             <div class="text-xl md:text-2xl mb-1 md:mb-2 opacity-80">🌸</div>
-                            
                             <span class="font-script text-4xl md:text-6xl text-gold-dark mb-6 md:mb-10 text-shadow-sm">Faltan</span>
-                            
-                            <!-- Grid limpio sin bordes extra -->
                             <div class="flex justify-center items-start gap-4 sm:gap-6 md:gap-10 w-full px-2 md:px-4">
-                                <!-- Días -->
                                 <div class="flex flex-col items-center w-12 md:w-auto">
                                     <span id="days" class="text-3xl md:text-6xl font-serif font-bold text-stone leading-none mb-2 md:mb-3">0</span>
                                     <div class="h-[1px] w-4 md:w-6 bg-gold/30 mb-2"></div>
                                     <small class="text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-gray-400 font-sans font-semibold">Días</small>
                                 </div>
-                                <!-- Horas -->
                                 <div class="flex flex-col items-center w-12 md:w-auto">
                                     <span id="hours" class="text-3xl md:text-6xl font-serif font-bold text-stone leading-none mb-2 md:mb-3">0</span>
                                     <div class="h-[1px] w-4 md:w-6 bg-gold/30 mb-2"></div>
                                     <small class="text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-gray-400 font-sans font-semibold">Hs</small>
                                 </div>
-                                <!-- Minutos -->
                                 <div class="flex flex-col items-center w-12 md:w-auto">
                                     <span id="mins" class="text-3xl md:text-6xl font-serif font-bold text-stone leading-none mb-2 md:mb-3">0</span>
                                     <div class="h-[1px] w-4 md:w-6 bg-gold/30 mb-2"></div>
                                     <small class="text-[8px] md:text-[10px] tracking-[0.1em] md:tracking-[0.2em] uppercase text-gray-400 font-sans font-semibold">Min</small>
                                 </div>
-                                <!-- Segundos -->
                                 <div class="flex flex-col items-center w-12 md:w-auto">
                                     <span id="secs" class="text-3xl md:text-6xl font-serif font-bold text-gold leading-none mb-2 md:mb-3">0</span>
                                     <div class="h-[1px] w-4 md:w-6 bg-gold/30 mb-2"></div>
@@ -391,48 +392,25 @@
                     </div>
                 </div>
 
-                <!-- Calendario: Estilo Arco -->
+                <!-- Calendario -->
                 <div class="order-1 md:order-2 flex justify-center" data-aos="fade-left">
                     <div class="arch-card bg-white w-full max-w-[320px] md:max-w-[400px] shadow-card-depth p-8 md:p-12 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-500">
-                        
-                        <!-- Borde Dorado Interno -->
                         <div class="arch-border-gold"></div>
-
-                        <!-- Decoración Floral Pequeña -->
                         <div class="absolute top-10 left-6 md:top-12 md:left-10 text-gold-light opacity-80 text-lg md:text-xl transform rotate-45">🌿</div>
-
                         <div class="text-center relative z-10 pt-2 md:pt-4">
                             <h3 class="font-serif text-4xl md:text-5xl text-stone mb-1">Marzo</h3>
                             <p class="text-gold-rich font-sans text-[10px] md:text-xs tracking-[0.4em] md:tracking-[0.6em] font-semibold uppercase mb-6 md:mb-8">2027</p>
                             
-                            <!-- Días de la semana -->
                             <div class="grid grid-cols-7 gap-y-4 md:gap-y-6 font-sans text-[10px] md:text-sm mb-4 md:mb-6 border-b border-gray-100 pb-4 md:pb-6 mx-0 md:mx-2">
-                                <div class="text-gold-rich font-bold">L</div>
-                                <div class="text-gray-400">M</div>
-                                <div class="text-gray-400">M</div>
-                                <div class="text-gray-400">J</div>
-                                <div class="text-gray-400">V</div>
-                                <div class="text-gray-400">S</div>
-                                <div class="text-gray-400">D</div>
+                                <div class="text-gold-rich font-bold">L</div><div class="text-gray-400">M</div><div class="text-gray-400">M</div><div class="text-gray-400">J</div><div class="text-gray-400">V</div><div class="text-gray-400">S</div><div class="text-gray-400">D</div>
                             </div>
                             
-                            <!-- Grid de Números -->
                             <div class="grid grid-cols-7 gap-y-1 md:gap-y-2 font-serif mx-0 md:mx-2 relative">
-                                <!-- Decoración floral en el día 3 -->
                                 <div class="absolute top-0 left-[2%] text-pink-300 opacity-60 text-base md:text-lg">🌸</div>
-
-                                <!-- Dummies -->
                                 <div></div><div></div><div></div><div></div><div></div>
-                                <div class="calendar-day text-gray-400 text-xs md:text-sm">1</div>
-                                <div class="calendar-day text-gray-400 text-xs md:text-sm">2</div>
-                                
+                                <div class="calendar-day text-gray-400 text-xs md:text-sm">1</div><div class="calendar-day text-gray-400 text-xs md:text-sm">2</div>
                                 <div class="calendar-day">3</div><div class="calendar-day">4</div><div class="calendar-day">5</div><div class="calendar-day">6</div><div class="calendar-day">7</div><div class="calendar-day">8</div><div class="calendar-day">9</div>
-                                
-                                <!-- El Gran Día (10) -->
-                                <div class="flex justify-center items-center">
-                                    <span class="calendar-day calendar-active shadow-lg">10</span>
-                                </div>
-                                
+                                <div class="flex justify-center items-center"><span class="calendar-day calendar-active shadow-lg">10</span></div>
                                 <div class="calendar-day">11</div><div class="calendar-day">12</div><div class="calendar-day">13</div><div class="calendar-day">14</div><div class="calendar-day">15</div><div class="calendar-day">16</div>
                                 <div class="calendar-day">17</div><div class="calendar-day">18</div><div class="calendar-day">19</div><div class="calendar-day">20</div><div class="calendar-day">21</div><div class="calendar-day">22</div><div class="calendar-day">23</div>
                             </div>
@@ -440,8 +418,6 @@
                             <div class="mt-8 md:mt-12 pt-0">
                                 <p class="font-script text-2xl md:text-3xl text-stone">Lunes, 18:30 horas</p>
                             </div>
-                            
-                            <!-- Flor decorativa inferior -->
                             <div class="absolute -bottom-2 right-6 md:right-10 text-pink-300 opacity-60 text-xl md:text-2xl transform rotate-12">🌺</div>
                         </div>
                     </div>
@@ -451,7 +427,7 @@
         </div>
     </section>
 
-    <!-- DETALLES (Tarjetas Glassmorphism) -->
+    <!-- DETALLES Y REGALO (3 Cards Grid) -->
     <section class="py-16 md:py-24 relative">
         <div class="watercolor-blob w-[400px] h-[400px] md:w-[600px] md:h-[600px] top-20 right-0 opacity-40"></div>
         
@@ -463,38 +439,58 @@
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8 md:gap-20 max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 max-w-7xl mx-auto">
                 
-                <!-- Ceremonia -->
-                <div class="glass-panel p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] text-center group hover:shadow-2xl transition-all duration-500" data-aos="fade-up" data-aos-delay="0">
-                    <div class="w-20 h-20 md:w-24 md:h-24 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8 group-hover:bg-gold group-hover:text-white transition-colors duration-500">
-                        <svg class="w-10 h-10 md:w-12 md:h-12 text-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
+                <!-- Card 1: Ceremonia -->
+                <div class="glass-panel p-8 rounded-[2rem] text-center group hover:shadow-2xl transition-all duration-500 h-full flex flex-col justify-between" data-aos="fade-up" data-aos-delay="0">
+                    <div>
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gold group-hover:text-white transition-colors duration-500">
+                            <svg class="w-8 h-8 md:w-10 md:h-10 text-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-stone mb-2">Ceremonia</h3>
+                        <p class="font-script text-xl text-gold mb-3">Catedral de la Almudena</p>
+                        <p class="font-sans text-sm text-gray-500 mb-6 leading-relaxed">
+                            Calle , 10, Chillan<br>Acompáñanos en el momento sagrado.
+                        </p>
                     </div>
-                    <h3 class="font-serif text-2xl md:text-3xl font-bold text-stone mb-2 md:mb-3">Ceremonia Religiosa</h3>
-                    <p class="font-script text-xl md:text-2xl text-gold mb-4 md:mb-6">Catedral de la Almudena</p>
-                    <p class="font-sans text-sm md:text-base text-gray-500 mb-8 md:mb-10 leading-relaxed px-2 md:px-4">
-                        Calle , 10, Chillan<br>
-                        Acompáñanos en el momento más sagrado de nuestra unión.
-                    </p>
-                    <a href="#" class="inline-block px-8 md:px-10 py-3 md:py-4 border border-stone text-stone text-xs md:text-sm font-bold tracking-widest uppercase hover:bg-stone hover:text-white transition-colors">
+                    <a href="#" class="inline-block px-8 py-3 border border-stone text-stone text-xs font-bold tracking-widest uppercase hover:bg-stone hover:text-white transition-colors">
                         Ver Mapa
                     </a>
                 </div>
 
-                <!-- Celebración -->
-                <div class="glass-panel p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] text-center group hover:shadow-2xl transition-all duration-500" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-20 h-20 md:w-24 md:h-24 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8 group-hover:bg-gold group-hover:text-white transition-colors duration-500">
-                        <svg class="w-10 h-10 md:w-12 md:h-12 text-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path></svg>
+                <!-- Card 2: Fiesta -->
+                <div class="glass-panel p-8 rounded-[2rem] text-center group hover:shadow-2xl transition-all duration-500 h-full flex flex-col justify-between" data-aos="fade-up" data-aos-delay="100">
+                    <div>
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gold group-hover:text-white transition-colors duration-500">
+                            <svg class="w-8 h-8 md:w-10 md:h-10 text-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path></svg>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-stone mb-2">Fiesta</h3>
+                        <p class="font-script text-xl text-gold mb-3">Finca Los Olivos</p>
+                        <p class="font-sans text-sm text-gray-500 mb-6 leading-relaxed">
+                            Calle , 10, Chillan<br>Cena, música y mucho baile.
+                        </p>
                     </div>
-                    <h3 class="font-serif text-2xl md:text-3xl font-bold text-stone mb-2 md:mb-3">Banquete & Fiesta</h3>
-                    <p class="font-script text-xl md:text-2xl text-gold mb-4 md:mb-6">Finca Los Olivos</p>
-                    <p class="font-sans text-sm md:text-base text-gray-500 mb-8 md:mb-10 leading-relaxed px-2 md:px-4">
-                        Calle , 10, Chillan<br>
-                        Después de la ceremonia, celebraremos con cena, música y baile.
-                    </p>
-                    <a href="#" class="inline-block px-8 md:px-10 py-3 md:py-4 border border-stone text-stone text-xs md:text-sm font-bold tracking-widest uppercase hover:bg-stone hover:text-white transition-colors">
+                    <a href="#" class="inline-block px-8 py-3 border border-stone text-stone text-xs font-bold tracking-widest uppercase hover:bg-stone hover:text-white transition-colors">
                         Ver Mapa
                     </a>
+                </div>
+
+                <!-- Card 3: Regalo (Nuevo) -->
+                <div class="glass-panel p-8 rounded-[2rem] text-center group hover:shadow-2xl transition-all duration-500 h-full flex flex-col justify-between" data-aos="fade-up" data-aos-delay="200">
+                    <div>
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gold group-hover:text-white transition-colors duration-500">
+                            <svg class="w-8 h-8 md:w-10 md:h-10 text-gold group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-stone mb-2">Regalo</h3>
+                        <p class="font-script text-xl text-gold mb-3">Lluvia de Sobres</p>
+                        <p class="font-sans text-sm text-gray-500 mb-6 leading-relaxed">
+                            Su presencia es nuestro mejor regalo. Si desean tener un detalle, pueden hacerlo aquí.
+                        </p>
+                    </div>
+                    <!-- Botón Trigger Modal -->
+                    <button onclick="openModal()" class="inline-block px-8 py-3 bg-stone text-white border border-stone text-xs font-bold tracking-widest uppercase hover:bg-gold hover:border-gold hover:text-white transition-all shadow-lg transform active:scale-95">
+                        Ver Datos
+                    </button>
                 </div>
 
             </div>
@@ -521,10 +517,66 @@
             </a>
 
             <div class="mt-16 md:mt-24 border-t border-white/10 pt-8 md:pt-10 w-full max-w-md mx-auto">
-                <p class="font-serif text-2xl md:text-3xl tracking-widest text-white/50">A & A</p>
+                <p class="font-serif text-2xl md:text-3xl tracking-widest text-white/50">M & J</p>
             </div>
         </div>
     </section>
+
+    <!-- MODAL DE DATOS BANCARIOS -->
+    <div id="bankModal" class="modal fixed inset-0 z-[100] flex items-center justify-center px-4">
+        <!-- Overlay oscuro -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
+        
+        <!-- Contenido del Modal -->
+        <div class="modal-content bg-white w-full max-w-md rounded-[2rem] shadow-2xl relative overflow-hidden p-8 text-center border-4 border-double border-gold/30">
+            
+            <!-- Botón cerrar -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-stone transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="w-16 h-16 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+            </div>
+
+            <h3 class="font-serif text-2xl font-bold text-stone mb-1">Datos de Transferencia</h3>
+            <p class="text-xs font-sans text-gray-400 uppercase tracking-widest mb-6">Regalo de Boda</p>
+
+            <div class="space-y-4 text-left bg-gray-50 p-6 rounded-xl border border-gray-100">
+                <div>
+                    <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Banco</p>
+                    <p class="font-serif text-lg text-stone">Banco Estado</p>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Tipo de Cuenta</p>
+                    <p class="font-serif text-lg text-stone">Cuenta RUT / Vista</p>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">RUT</p>
+                    <p class="font-serif text-lg text-stone">12.345.678-9</p>
+                </div>
+                
+                <!-- Número de cuenta con botón copiar -->
+                <div class="relative">
+                    <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">N° de Cuenta</p>
+                    <div class="flex items-center justify-between">
+                        <p id="accountNumber" class="font-serif text-lg text-stone font-bold">12345678</p>
+                        <button onclick="copyToClipboard('12345678')" class="text-xs bg-gold text-white px-3 py-1 rounded-full hover:bg-stone transition-colors flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                            Copiar
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Email</p>
+                    <p class="font-serif text-base text-stone">novios@ejemplo.com</p>
+                </div>
+            </div>
+
+            <p class="text-xs text-gray-400 mt-6 italic">¡Muchas gracias por su cariño!</p>
+        </div>
+    </div>
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -536,7 +588,39 @@
             easing: 'ease-out-cubic'
         });
 
-        // Lógica del Carrusel
+        // --- LÓGICA DEL MODAL ---
+        const modal = document.getElementById('bankModal');
+
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Evita scroll
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restaura scroll
+        }
+
+        // Copiar al portapapeles
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Feedback visual simple (podrías usar un toast mejorado)
+                const btn = event.currentTarget;
+                const originalText = btn.innerHTML;
+                
+                btn.innerHTML = '¡Copiado!';
+                btn.classList.add('bg-green-600');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-green-600');
+                }, 2000);
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+            });
+        }
+
+        // --- LÓGICA CARRUSEL Y RESTO ---
         let currentSlide = 0;
         const slides = document.querySelectorAll('.carousel-item');
         const dots = document.querySelectorAll('.dot');
@@ -554,21 +638,18 @@
             currentSlide = index;
         }
 
-        // Auto avance del carrusel
         setInterval(() => {
             let next = (currentSlide + 1) % slides.length;
             setSlide(next);
         }, 5000);
 
         // Cuenta regresiva
-        // IMPORTANTE: Aseguramos que la fecha sea futura (2027) para evitar números negativos
         const weddingDate = new Date("March 10, 2026 18:30:00").getTime();
         
         setInterval(function() {
             const now = new Date().getTime();
             let distance = weddingDate - now;
 
-            // Seguridad: Si la distancia es negativa (por error de fecha), mostramos 0
             if (distance < 0) distance = 0;
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -576,8 +657,6 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Modificado: Ya NO agregamos el '0' a la izquierda si es menor a 10.
-            // Se muestra tal cual: "5" en lugar de "05".
             document.getElementById("days").innerText = days;
             document.getElementById("hours").innerText = hours;
             document.getElementById("mins").innerText = minutes;
@@ -593,33 +672,26 @@
             if (isPlaying) {
                 audio.pause();
                 btn.classList.remove('playing');
-                document.getElementById('musicIcon').style.color = '#C5A059'; // Gold
+                document.getElementById('musicIcon').style.color = '#C5A059'; 
             } else {
                 audio.play();
                 btn.classList.add('playing');
-                document.getElementById('musicIcon').style.color = '#1C1917'; // Dark
+                document.getElementById('musicIcon').style.color = '#1C1917'; 
             }
             isPlaying = !isPlaying;
         }
 
-        // Efecto de Pétalos Suaves
         function createPetal() {
             if (document.hidden) return; 
             const petal = document.createElement('div');
             petal.classList.add('petal');
-            // Usamos caracteres o imágenes SVG pequeñas
             const types = ['🌸', '✨', '🍃'];
             petal.innerText = types[Math.floor(Math.random() * types.length)];
-            
             petal.style.left = Math.random() * 100 + 'vw';
-            petal.style.fontSize = Math.random() * 12 + 12 + 'px'; // Más pequeños y elegantes
-            petal.style.animationDuration = Math.random() * 5 + 10 + 's'; // Más lentos
-            
+            petal.style.fontSize = Math.random() * 10 + 10 + 'px'; 
+            petal.style.animationDuration = Math.random() * 5 + 10 + 's'; 
             document.body.appendChild(petal);
-            
-            setTimeout(() => {
-                petal.remove();
-            }, 15000);
+            setTimeout(() => { petal.remove(); }, 15000);
         }
 
         setInterval(createPetal, 2000);
