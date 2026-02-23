@@ -6,7 +6,7 @@
     <title>Apertura de Invitación Premium</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Se agregó 'Cinzel' para el sello -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Pinyon+Script&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -47,6 +47,7 @@
             transform-origin: top;
             transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.45s;
             z-index: 40;
+            transform-style: preserve-3d;
         }
         .flap-top.open {
             transform: rotateX(180deg);
@@ -132,12 +133,35 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Efectos de Brillos y Flores al abrir */
+        .effect-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform, opacity;
+        }
+        @keyframes particle-explode {
+            0% { transform: translate(0, 0) scale(0) rotate(0deg); opacity: 1; }
+            20% { opacity: 1; }
+            80% { opacity: 0.8; }
+            100% { transform: translate(var(--tx), calc(var(--ty) + 100px)) scale(var(--scale)) rotate(var(--rot)); opacity: 0; }
+        }
+        .anim-particle {
+            animation: particle-explode var(--duration) cubic-bezier(0.25, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInScreen {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body class="h-screen w-screen relative selection:bg-[#eab6c4] selection:text-white">
 
     <div id="page-wrapper" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-1000">
-        <div id="intro-presentation" class="intro-anim-container flex flex-col items-center">
+        <!-- Se agregaron márgenes negativos (-mt-24 sm:-mt-32) para subir el bloque completo -->
+        <div id="intro-presentation" class="intro-anim-container flex flex-col items-center -mt-24 sm:-mt-32">
             
             <!-- Anuncio de Boda Superior -->
             <div id="wedding-announcement" class="title-fade-anim text-center mb-10 sm:mb-14">
@@ -209,7 +233,7 @@
                         <span class="font-seal font-semibold text-white text-[22px] sm:text-[26px] tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.15)] relative top-[1px]">A & P</span>
                     </div>
                     
-                    <!-- Cuadro de Invitaciones (Idéntico a tu referencia) -->
+                    <!-- Cuadro de Invitaciones -->
                     <div id="guest-label" class="guest-label-anim absolute -bottom-14 sm:-bottom-16 left-1/2 -translate-x-1/2 z-[45] bg-white px-8 py-5 rounded-[14px] shadow-[0_15px_30px_rgba(0,0,0,0.08)] text-center w-[90%] max-w-[280px]">
                         <h3 class="font-serif-elegant text-[#2a4235] font-bold text-[13px] sm:text-[15px] tracking-[0.3em] uppercase mb-[6px]">Invitación</h3>
                         <p class="font-sans text-[8px] sm:text-[9px] text-gray-400 tracking-[0.2em] uppercase mb-4">Válida para</p>
@@ -283,6 +307,9 @@
             textInstr.classList.remove('show');
             announcement.classList.remove('show'); // Desvanece el título superior al abrir
 
+            // Disparar los efectos visuales (brillos y flores)
+            spawnEffects();
+
             // Abrir la solapa superior (automáticamente hará la transición 3D y de Z-index)
             setTimeout(() => {
                 flap.classList.add('open');
@@ -293,13 +320,87 @@
                 letter.classList.add('open');
             }, 1200);
 
-            // Redirección
+            // Redirección simulada para mostrar dentro de este mismo archivo
             setTimeout(() => {
                 pageWrapper.style.opacity = '0';
+                
                 setTimeout(() => {
-                    window.location.href = 'invitacion.html';
+                    // Si deseas usar la URL original, descomenta esta línea y borra la inyección HTML de abajo.
+                    // window.location.href = 'invitacion.html';
+                    
+                    // Mostramos un interior falso para que la vista previa sea funcional
+                    document.body.style.backgroundColor = '#fdfbfb';
+                    document.body.innerHTML = `
+                        <div class="h-screen w-screen flex flex-col items-center justify-center p-8 text-center" style="animation: fadeInScreen 1.5s ease-out forwards;">
+                            <div class="w-[60%] h-[1px] bg-gradient-to-r from-transparent via-[#d4af37]/60 to-transparent mb-8"></div>
+                            <h1 class="font-serif-elegant text-5xl sm:text-6xl text-[#2a4235] italic mb-6">A & P</h1>
+                            <p class="font-sans text-[#7c9787] text-xs sm:text-sm tracking-[0.3em] uppercase mb-12">Bienvenido a la invitación digital</p>
+                            <button onclick="location.reload()" class="px-8 py-3 border border-[#d4af37] text-[#d4af37] rounded-full uppercase tracking-widest text-[10px] sm:text-xs hover:bg-[#d4af37] hover:text-white transition-colors duration-300">Volver a abrir el sobre</button>
+                            <div class="w-[60%] h-[1px] bg-gradient-to-r from-transparent via-[#d4af37]/60 to-transparent mt-8"></div>
+                        </div>
+                    `;
                 }, 1000);
             }, 3200);
+        }
+
+        // === Función generadora de Brillos y Flores ===
+        function spawnEffects() {
+            const seal = document.getElementById('wax-seal');
+            const rect = seal.getBoundingClientRect();
+            // Calcular el centro exacto del sello respecto a la pantalla
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            // Diferentes SVG para la explosión (Brillos dorados, flores rosas y hojas salvia)
+            const svgs = {
+                sparkle: `<svg viewBox="0 0 24 24" fill="#d4af37"><path d="M12 0l2.5 8.5L23 11l-8.5 2.5L12 22l-2.5-8.5L1 11l8.5-2.5z"/></svg>`,
+                flower1: `<svg viewBox="0 0 24 24" fill="#f4c2d0"><path d="M12 2c0 0-3 4-3 8s3 6 3 6 3-2 3-6-3-8-3-8z"/><path d="M12 22c0 0 3-4 3-8s-3-6-3-6-3 2-3 6 3 8 3 8z"/><path d="M2 12c0 0 4-3 8-3s6 3 6 3-2 3-6 3-8-3-8-3z"/><path d="M22 12c0 0-4 3-8 3s-6-3-6-3 2-3 6-3 8 3 8 3z"/></svg>`,
+                flower2: `<svg viewBox="0 0 24 24" fill="#ffffff" stroke="#eab6c4" stroke-width="1"><circle cx="12" cy="12" r="3" fill="#d4af37" stroke="none"/><circle cx="12" cy="5" r="4"/><circle cx="12" cy="19" r="4"/><circle cx="5" cy="12" r="4"/><circle cx="19" cy="12" r="4"/><circle cx="7" cy="7" r="4"/><circle cx="17" cy="17" r="4"/><circle cx="7" cy="17" r="4"/><circle cx="17" cy="7" r="4"/></svg>`,
+                leaf: `<svg viewBox="0 0 24 24" fill="#8ba696"><path d="M12 22c0 0-8-4-8-12 0-3 2-5 5-6 2-1 4 0 5 1 1-1 3-2 5-1 3 1 5 3 5 6 0 8-8 12-8 12z"/></svg>`
+            };
+
+            const createParticle = (type, amount) => {
+                for (let i = 0; i < amount; i++) {
+                    const el = document.createElement('div');
+                    el.innerHTML = svgs[type];
+                    el.className = 'effect-particle anim-particle';
+                    
+                    // Matemáticas para dispersión circular aleatoria (¡Exageradas!)
+                    const angle = Math.random() * Math.PI * 2;
+                    // Distancias mucho más amplias para cubrir la pantalla
+                    const distance = (type === 'sparkle') ? (Math.random() * 250 + 100) : (Math.random() * 450 + 150);
+                    
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance - 120; // Fuerte tendencia inicial hacia arriba
+                    
+                    const rot = Math.random() * 720; // Doble rotación para más dinamismo
+                    const scale = (type === 'sparkle') ? (Math.random() * 1.2 + 0.8) : (Math.random() * 2.0 + 1.2); // Más grandes
+                    const duration = Math.random() * 2.0 + 2.0; // Más tiempo en pantalla (entre 2s y 4s)
+                    const size = (type === 'sparkle') ? 22 : 38; // Tamaño base incrementado
+
+                    // Asignar variables CSS para la animación keyframe
+                    el.style.left = `${centerX - size/2}px`;
+                    el.style.top = `${centerY - size/2}px`;
+                    el.style.width = `${size}px`;
+                    el.style.height = `${size}px`;
+                    el.style.setProperty('--tx', `${tx}px`);
+                    el.style.setProperty('--ty', `${ty}px`);
+                    el.style.setProperty('--rot', `${rot}deg`);
+                    el.style.setProperty('--scale', scale);
+                    el.style.setProperty('--duration', `${duration}s`);
+
+                    document.body.appendChild(el);
+
+                    // Limpiar el DOM al terminar para no recargar la memoria
+                    setTimeout(() => el.remove(), duration * 1000);
+                }
+            };
+
+            // Lanzar elementos (¡Cantidades exageradas!)
+            createParticle('sparkle', 75);
+            createParticle('flower1', 20);
+            createParticle('flower2', 20);
+            createParticle('leaf', 30);
         }
     </script>
 </body>
