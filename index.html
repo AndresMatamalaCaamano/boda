@@ -40,7 +40,12 @@
         }
 
         /* Animación del Sobre */
-        .envelope-wrapper { perspective: 1500px; }
+        .envelope-wrapper { 
+            perspective: 1500px; 
+            width: 85vw;
+            max-width: 400px;
+            aspect-ratio: 1.43; /* Relación de aspecto dinámica para celulares */
+        }
         
         /* SOLUCIÓN AL FALLO DE DISEÑO: Transición de z-index a la mitad del giro */
         .flap-top {
@@ -48,6 +53,7 @@
             transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.45s;
             z-index: 40;
             transform-style: preserve-3d;
+            will-change: transform; /* Mejora de rendimiento y fluidez en móviles */
         }
         .flap-top.open {
             transform: rotateX(180deg);
@@ -57,9 +63,10 @@
         .letter-pull {
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
             z-index: 20;
+            will-change: transform; /* Evita tirones en móviles */
         }
         .letter-pull.open {
-            transform: translateY(-145px) scale(1.03);
+            transform: translateY(-65%) scale(1.03); /* Uso de porcentajes para adaptarse a cualquier pantalla */
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
         
@@ -170,8 +177,8 @@
             </div>
 
             <div id="envelope-floater" class="floating">
-                <!-- Contenedor del sobre -->
-                <div class="relative w-[320px] h-[220px] sm:w-[400px] sm:h-[280px] envelope-wrapper">
+                <!-- Contenedor del sobre responsivo -->
+                <div class="relative envelope-wrapper">
                     
                     <!-- Fondo interior del sobre (Parte trasera que se ve al sacar la carta) -->
                     <div class="absolute inset-0 bg-[#7c9787] rounded-md shadow-[0_25px_50px_rgba(0,0,0,0.1)] overflow-hidden">
@@ -351,6 +358,14 @@
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
 
+            // Factor de escala para celulares (evita que las partículas se salgan de la pantalla al instante)
+            const isMobile = window.innerWidth < 640;
+            const distanceMultiplier = isMobile ? 0.55 : 1;
+            const sizeMultiplier = isMobile ? 0.75 : 1;
+
+            // OPTIMIZACIÓN DE FLUIDEZ: Usamos un DocumentFragment para inyectar todo de golpe al DOM
+            const fragment = document.createDocumentFragment();
+
             // Diferentes SVG para la explosión (Brillos dorados, flores rosas y hojas salvia)
             const svgs = {
                 sparkle: `<svg viewBox="0 0 24 24" fill="#d4af37"><path d="M12 0l2.5 8.5L23 11l-8.5 2.5L12 22l-2.5-8.5L1 11l8.5-2.5z"/></svg>`,
@@ -365,18 +380,22 @@
                     el.innerHTML = svgs[type];
                     el.className = 'effect-particle anim-particle';
                     
-                    // Matemáticas para dispersión circular aleatoria (¡Exageradas!)
+                    // Matemáticas para dispersión circular aleatoria (adaptable a pantalla)
                     const angle = Math.random() * Math.PI * 2;
-                    // Distancias mucho más amplias para cubrir la pantalla
-                    const distance = (type === 'sparkle') ? (Math.random() * 250 + 100) : (Math.random() * 450 + 150);
+                    // Distancias adaptadas: menos distancia en celulares
+                    const distance = (type === 'sparkle') 
+                        ? (Math.random() * 250 + 100) * distanceMultiplier 
+                        : (Math.random() * 450 + 150) * distanceMultiplier;
                     
                     const tx = Math.cos(angle) * distance;
-                    const ty = Math.sin(angle) * distance - 120; // Fuerte tendencia inicial hacia arriba
+                    const ty = Math.sin(angle) * distance - (isMobile ? 70 : 120); // Impulso hacia arriba adaptado
                     
-                    const rot = Math.random() * 720; // Doble rotación para más dinamismo
-                    const scale = (type === 'sparkle') ? (Math.random() * 1.2 + 0.8) : (Math.random() * 2.0 + 1.2); // Más grandes
-                    const duration = Math.random() * 2.0 + 2.0; // Más tiempo en pantalla (entre 2s y 4s)
-                    const size = (type === 'sparkle') ? 22 : 38; // Tamaño base incrementado
+                    const rot = Math.random() * 720;
+                    const scale = (type === 'sparkle') 
+                        ? (Math.random() * 1.2 + 0.8) * sizeMultiplier 
+                        : (Math.random() * 2.0 + 1.2) * sizeMultiplier;
+                    const duration = Math.random() * 2.0 + 2.0;
+                    const size = (type === 'sparkle') ? 22 : 38;
 
                     // Asignar variables CSS para la animación keyframe
                     el.style.left = `${centerX - size/2}px`;
@@ -389,18 +408,22 @@
                     el.style.setProperty('--scale', scale);
                     el.style.setProperty('--duration', `${duration}s`);
 
-                    document.body.appendChild(el);
+                    // Añadir al fragmento en memoria, no directo al HTML
+                    fragment.appendChild(el);
 
-                    // Limpiar el DOM al terminar para no recargar la memoria
+                    // Limpiar el DOM al terminar
                     setTimeout(() => el.remove(), duration * 1000);
                 }
             };
 
-            // Lanzar elementos (¡Cantidades exageradas!)
-            createParticle('sparkle', 75);
-            createParticle('flower1', 20);
+            // Lanzar elementos (¡Cantidades exageradas pero fluidas!)
+            createParticle('sparkle', 100);
+            createParticle('flower1', 25);
             createParticle('flower2', 20);
             createParticle('leaf', 30);
+
+            // Inyectar todas las partículas a la vez (1 solo proceso de renderizado en el navegador)
+            document.body.appendChild(fragment);
         }
     </script>
 </body>
