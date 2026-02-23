@@ -306,22 +306,6 @@
             if (isOpened) return;
             isOpened = true;
 
-            const floater = document.getElementById('envelope-floater');
-            
-            // FIX SALTO ABRUPTO: Capturamos la posición exacta del sobre antes de detener el flote
-            const computedStyle = window.getComputedStyle(floater);
-            const currentTransform = computedStyle.getPropertyValue('transform');
-            
-            // Fijamos la posición para que no caiga de golpe, y le decimos que transicione suavemente al centro
-            floater.style.transform = currentTransform;
-            floater.classList.remove('floating');
-            
-            // Aterrizaje suave
-            setTimeout(() => {
-                floater.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.3, 1)';
-                floater.style.transform = 'translateY(0) rotate(0)';
-            }, 10);
-
             const seal = document.getElementById('wax-seal');
             const guestLabel = document.getElementById('guest-label');
             const flap = document.getElementById('envelope-flap');
@@ -336,6 +320,7 @@
             announcement.classList.remove('show'); // Desvanece el título superior al abrir
 
             // Disparar los efectos visuales (brillos y flores)
+            // Calculamos desde dónde disparar justo en el momento exacto del toque
             spawnEffects();
 
             // Abrir la solapa superior
