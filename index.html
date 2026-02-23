@@ -44,7 +44,14 @@
             perspective: 1500px; 
             width: 85vw;
             max-width: 400px;
-            aspect-ratio: 1.43; /* Relación de aspecto dinámica para celulares */
+            /* Se eliminó aspect-ratio para evitar el bug de colapso en móviles Safari */
+        }
+        
+        /* FIX DE ALTURA PARA MÓVILES: Mantiene la proporción 1:1.43 de forma 100% estable */
+        .envelope-wrapper::before {
+            content: "";
+            display: block;
+            padding-bottom: 70%; 
         }
         
         /* SOLUCIÓN AL FALLO DE DISEÑO: Transición de z-index a la mitad del giro */
@@ -164,11 +171,12 @@
         }
     </style>
 </head>
-<body class="h-screen w-screen relative selection:bg-[#eab6c4] selection:text-white">
+<!-- Usamos h-[100dvh] en lugar de h-screen para evitar brincos en la barra del navegador móvil -->
+<body class="h-[100dvh] w-screen relative selection:bg-[#eab6c4] selection:text-white">
 
     <div id="page-wrapper" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-1000">
         <!-- Se agregaron márgenes negativos (-mt-24 sm:-mt-32) para subir el bloque completo -->
-        <div id="intro-presentation" class="intro-anim-container flex flex-col items-center -mt-24 sm:-mt-32">
+        <div id="intro-presentation" class="intro-anim-container flex flex-col items-center -mt-24 sm:-mt-32 w-full">
             
             <!-- Anuncio de Boda Superior -->
             <div id="wedding-announcement" class="title-fade-anim text-center mb-10 sm:mb-14">
@@ -298,8 +306,21 @@
             if (isOpened) return;
             isOpened = true;
 
-            // Congelamos el flote para una apertura limpia
-            document.getElementById('envelope-floater').classList.remove('floating');
+            const floater = document.getElementById('envelope-floater');
+            
+            // FIX SALTO ABRUPTO: Capturamos la posición exacta del sobre antes de detener el flote
+            const computedStyle = window.getComputedStyle(floater);
+            const currentTransform = computedStyle.getPropertyValue('transform');
+            
+            // Fijamos la posición para que no caiga de golpe, y le decimos que transicione suavemente al centro
+            floater.style.transform = currentTransform;
+            floater.classList.remove('floating');
+            
+            // Aterrizaje suave
+            setTimeout(() => {
+                floater.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.3, 1)';
+                floater.style.transform = 'translateY(0) rotate(0)';
+            }, 10);
 
             const seal = document.getElementById('wax-seal');
             const guestLabel = document.getElementById('guest-label');
@@ -317,24 +338,21 @@
             // Disparar los efectos visuales (brillos y flores)
             spawnEffects();
 
-            // Abrir la solapa superior (automáticamente hará la transición 3D y de Z-index)
+            // Abrir la solapa superior
             setTimeout(() => {
                 flap.classList.add('open');
             }, 300);
 
-            // Sale la carta revelando el interior profundo del sobre
+            // Sale la carta
             setTimeout(() => {
                 letter.classList.add('open');
             }, 1200);
 
-            // Redirección simulada para mostrar dentro de este mismo archivo
+            // Redirección
             setTimeout(() => {
                 pageWrapper.style.opacity = '0';
                 
                 setTimeout(() => {
-                    // Si deseas usar la URL original, descomenta esta línea y borra la inyección HTML de abajo.
-                    // window.location.href = 'invitacion.html';
-                    
                     // Mostramos un interior falso para que la vista previa sea funcional
                     document.body.style.backgroundColor = '#fdfbfb';
                     document.body.innerHTML = `
