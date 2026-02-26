@@ -161,11 +161,12 @@
         }
     </style>
 </head>
-<body class="h-[1dvh] w-full relative antialiased selection:bg-[#eab6c4] selection:text-white flex items-center justify-center">
+<body class="h-[100dvh] w-full relative antialiased selection:bg-[#eab6c4] selection:text-white flex items-center justify-center overflow-hidden">
 
     <div id="page-wrapper" class="w-full absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-1000">
-        <!-- He cambiado ligeramente -mt-15 y -mt-25 a -mt-16 y -mt-24 para asegurar que Tailwind CSS los detecte correctamente -->
-        <div id="intro-presentation" class="intro-anim-container flex flex-col items-center w-full px-4 -mt-16 sm:-mt-24">
+        
+        <!-- FIX APLICADO: Quitamos los márgenes negativos (-mt-16) que cortaban la imagen en celular y usamos pb-12 para subirlo de forma segura -->
+        <div id="intro-presentation" class="intro-anim-container flex flex-col items-center w-full px-4 pb-12 sm:pb-20">
             
             <!-- Anuncio de Boda Superior -->
             <div id="wedding-announcement" class="title-fade-anim text-center mb-8 sm:mb-12 transition-opacity duration-700">
